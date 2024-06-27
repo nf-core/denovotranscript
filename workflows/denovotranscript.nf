@@ -1,5 +1,19 @@
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    VALIDATE INPUTS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+
+// Check rRNA databases for sortmerna
+if (params.remove_ribo_rna) {
+    ch_ribo_db = file(params.ribo_database_manifest)
+    if (ch_ribo_db.isEmpty()) {exit 1, "File provided with --ribo_database_manifest is empty: ${ch_ribo_db.getName()}!"}
+} else {
+    ch_ribo_db = Channel.empty()
+}
+
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
@@ -11,6 +25,8 @@ include { paramsSummaryMap            } from 'plugin/nf-validation'
 include { paramsSummaryMultiqc        } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { softwareVersionsToYAML      } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { methodsDescriptionText      } from '../subworkflows/local/utils_nfcore_denovotranscript_pipeline'
+include { SORTMERNA                   } from '../modules/nf-core/sortmerna/main'
+include { FASTQC as FASTQC_FINAL      } from '../modules/nf-core/fastqc/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -54,6 +70,31 @@ workflow DENOVOTRANSCRIPT {
     ch_multiqc_files = ch_multiqc_files.mix(FASTQ_TRIM_FASTP_FASTQC.out.fastqc_raw_zip.collect{it[1]})
     ch_fastqc_trim_multiqc  = ch_multiqc_files.mix(FASTQ_TRIM_FASTP_FASTQC.out.fastqc_trim_zip.collect{it[1]})
     ch_versions = ch_versions.mix(FASTQ_TRIM_FASTP_FASTQC.out.versions)
+    ch_filtered_reads = FASTQ_TRIM_FASTP_FASTQC.out.reads
+
+    if (params.remove_ribo_rna) {
+        ch_sortmerna_fastas = Channel.from(ch_ribo_db.readLines()).map { row -> file(row, checkIfExists: true) }.collect()
+        //ch_sortmerna_index = params.sortmerna_index ? Channel.fromPath(params.sortmerna_index, checkIfExists: true) : Channel.empty()
+        //
+        // MODULE: SORTMERNA
+        //
+        SORTMERNA (
+            ch_filtered_reads,
+            ch_sortmerna_fastas
+        )
+        ch_filtered_reads = SORTMERNA.out.reads
+        ch_multiqc_files = ch_multiqc_files.mix(SORTMERNA.out.log.collect{it[1]}.ifEmpty([]))
+        ch_versions = ch_versions.mix(SORTMERNA.out.versions)
+
+        //
+        // MODULE: FASTQC
+        //
+        FASTQC_FINAL (
+            SORTMERNA.out.reads
+        )
+        ch_multiqc_files = ch_multiqc_files.mix(FASTQC_FINAL.out.zip.collect{it[1]})
+        ch_versions = ch_versions.mix(FASTQC_FINAL.out.versions)
+    }
 
     //
     // Collate and save software versions

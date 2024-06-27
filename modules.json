@@ -19,6 +19,11 @@
                         "branch": "master",
                         "git_sha": "b7ebe95761cd389603f9cc0e0dc384c0f663815a",
                         "installed_by": ["modules"]
+                    },
+                    "sortmerna": {
+                        "branch": "master",
+                        "git_sha": "ad22467dff16284093e7335d5e77964e9bbc510b",
+                        "installed_by": ["modules"]
                     }
                 }
             },
