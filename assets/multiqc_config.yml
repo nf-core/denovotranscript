@@ -10,6 +10,25 @@ report_section_order:
   "nf-core-denovotranscript-summary":
     order: -1002
 
+module_order:
+  - fastqc:
+      name: "FastQC raw"
+      info: "This section of the report shows FastQC results of the raw reads."
+      path_filters:
+        - "*/*_raw_*.zip"
+  - fastqc:
+      name: "FastQC after trimming"
+      info: "This section of the report shows FastQC results after trimming with
+        fastp."
+      path_filters:
+        - "*/*_trim_*.zip"
+  - fastqc:
+      name: "FastQC after filtering"
+      info: "This section of the report shows FastQC results after trimming with
+        fastp (if used) and filtering with SortMeRNA."
+      path_filters:
+        - "*/*_final_*.zip"
+
 export_plots: true
 
 disable_version_detection: true
