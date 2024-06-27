@@ -4,12 +4,13 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { FASTQC                 } from '../modules/nf-core/fastqc/main'
-include { MULTIQC                } from '../modules/nf-core/multiqc/main'
-include { paramsSummaryMap       } from 'plugin/nf-validation'
-include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_denovotranscript_pipeline'
+include { FASTQ_TRIM_FASTP_FASTQC     } from '../subworkflows/nf-core/fastq_trim_fastp_fastqc/main'
+include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
+include { fromSamplesheet             } from 'plugin/nf-validation'
+include { paramsSummaryMap            } from 'plugin/nf-validation'
+include { paramsSummaryMultiqc        } from '../subworkflows/nf-core/utils_nfcore_pipeline'
+include { softwareVersionsToYAML      } from '../subworkflows/nf-core/utils_nfcore_pipeline'
+include { methodsDescriptionText      } from '../subworkflows/local/utils_nfcore_denovotranscript_pipeline'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -28,13 +29,31 @@ workflow DENOVOTRANSCRIPT {
     ch_multiqc_files = Channel.empty()
 
     //
-    // MODULE: Run FastQC
+    // Create channel from input file provided through params.input
     //
-    FASTQC (
-        ch_samplesheet
+
+    Channel
+        .fromSamplesheet("input")
+        .map {
+            meta, fastq_1, fastq_2 ->
+                [ meta, [ fastq_1, fastq_2 ] ]
+        }
+        .set { ch_fastq }
+
+    //
+    // MODULE: FASTQ_TRIM_FASTP_FASTQC
+    //
+    FASTQ_TRIM_FASTP_FASTQC (
+        ch_fastq,
+        params.adapter_fasta,
+        params.save_trimmed_fail,
+        params.save_merged,
+        params.skip_fastp,
+        params.skip_fastqc
     )
-    ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]})
-    ch_versions = ch_versions.mix(FASTQC.out.versions.first())
+    ch_multiqc_files = ch_multiqc_files.mix(FASTQ_TRIM_FASTP_FASTQC.out.fastqc_raw_zip.collect{it[1]})
+    ch_fastqc_trim_multiqc  = ch_multiqc_files.mix(FASTQ_TRIM_FASTP_FASTQC.out.fastqc_trim_zip.collect{it[1]})
+    ch_versions = ch_versions.mix(FASTQ_TRIM_FASTP_FASTQC.out.versions)
 
     //
     // Collate and save software versions

@@ -5,10 +5,15 @@
         "https://github.com/nf-core/modules.git": {
             "modules": {
                 "nf-core": {
+                    "fastp": {
+                        "branch": "master",
+                        "git_sha": "b90b5cd93149a1b3be263d916c7234fe0708a71c",
+                        "installed_by": ["fastq_trim_fastp_fastqc"]
+                    },
                     "fastqc": {
                         "branch": "master",
                         "git_sha": "285a50500f9e02578d90b3ce6382ea3c30216acd",
-                        "installed_by": ["modules"]
+                        "installed_by": ["fastq_trim_fastp_fastqc", "modules"]
                     },
                     "multiqc": {
                         "branch": "master",
@@ -19,6 +24,11 @@
             },
             "subworkflows": {
                 "nf-core": {
+                    "fastq_trim_fastp_fastqc": {
+                        "branch": "master",
+                        "git_sha": "cfd937a668919d948f6fcbf4218e79de50c2f36f",
+                        "installed_by": ["subworkflows"]
+                    },
                     "utils_nextflow_pipeline": {
                         "branch": "master",
                         "git_sha": "5caf7640a9ef1d18d765d55339be751bb0969dfa",
