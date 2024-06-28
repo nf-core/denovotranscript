@@ -13,14 +13,16 @@ process SPADES {
     path hmm
 
     output:
-    tuple val(meta), path('*.scaffolds.fa.gz')    , optional:true, emit: scaffolds
-    tuple val(meta), path('*.contigs.fa.gz')      , optional:true, emit: contigs
-    tuple val(meta), path('*.transcripts.fa.gz')  , optional:true, emit: transcripts
-    tuple val(meta), path('*.gene_clusters.fa.gz'), optional:true, emit: gene_clusters
-    tuple val(meta), path('*.assembly.gfa.gz')    , optional:true, emit: gfa
-    tuple val(meta), path('warnings.log')         , optional:true, emit: warnings
-    tuple val(meta), path('*.spades.log')         , emit: log
-    path  "versions.yml"                          , emit: versions
+    tuple val(meta), path('*.scaffolds.fa.gz')                  , optional:true, emit: scaffolds
+    tuple val(meta), path('*.contigs.fa.gz')                    , optional:true, emit: contigs
+    tuple val(meta), path('*.transcripts.fa.gz')                , optional:true, emit: transcripts
+    tuple val(meta), path('*.soft_filtered_transcripts.fa.gz')  , optional:true, emit: soft_filtered_transcripts
+    tuple val(meta), path('*.hard_filtered_transcripts.fa.gz')  , optional:true, emit: hard_filtered_transcripts
+    tuple val(meta), path('*.gene_clusters.fa.gz')              , optional:true, emit: gene_clusters
+    tuple val(meta), path('*.assembly.gfa.gz')                  , optional:true, emit: gfa
+    tuple val(meta), path('warnings.log')                       , optional:true, emit: warnings
+    tuple val(meta), path('*.spades.log')                       , emit: log
+    path  "versions.yml"                                        , emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -56,6 +58,14 @@ process SPADES {
         mv transcripts.fasta ${prefix}.transcripts.fa
         gzip -n ${prefix}.transcripts.fa
     fi
+    if [ -f soft_filtered_transcripts.fasta ]; then
+        mv soft_filtered_transcripts.fasta ${prefix}.soft_filtered_transcripts.fa
+        gzip -n ${prefix}.soft_filtered_transcripts.fa
+    fi
+    if [ -f hard_filtered_transcripts.fasta ]; then
+        mv hard_filtered_transcripts.fasta ${prefix}.hard_filtered_transcripts.fa
+        gzip -n ${prefix}.hard_filtered_transcripts.fa
+    fi
     if [ -f assembly_graph_with_scaffolds.gfa ]; then
         mv assembly_graph_with_scaffolds.gfa ${prefix}.assembly.gfa
         gzip -n ${prefix}.assembly.gfa
@@ -85,6 +95,8 @@ process SPADES {
     echo "" | gzip > ${prefix}.scaffolds.fa.gz
     echo "" | gzip > ${prefix}.contigs.fa.gz
     echo "" | gzip > ${prefix}.transcripts.fa.gz
+    echo "" | gzip > ${prefix}.soft_filtered_transcripts.fa.gz
+    echo "" | gzip > ${prefix}.hard_filtered_transcripts.fa.gz
     echo "" | gzip > ${prefix}.gene_clusters.fa.gz
     echo "" | gzip > ${prefix}.assembly.gfa.gz
     touch ${prefix}.spades.log

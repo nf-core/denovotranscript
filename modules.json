@@ -34,7 +34,8 @@
                     "spades": {
                         "branch": "master",
                         "git_sha": "b3f04d8392f4571d5869eb3a345892dd2cbea225",
-                        "installed_by": ["modules"]
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/spades/spades.diff"
                     },
                     "trinity": {
                         "branch": "master",
