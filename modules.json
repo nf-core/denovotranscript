@@ -30,6 +30,11 @@
                         "git_sha": "ad22467dff16284093e7335d5e77964e9bbc510b",
                         "installed_by": ["modules"],
                         "patch": "modules/nf-core/sortmerna/sortmerna.diff"
+                    },
+                    "trinity": {
+                        "branch": "master",
+                        "git_sha": "e06c5f45395d6e34531257b125d410a298a3bd4f",
+                        "installed_by": ["modules"]
                     }
                 }
             },

@@ -18,6 +18,7 @@ if (params.remove_ribo_rna) {
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
+include { validateInputSamplesheet    } from '../subworkflows/local/utils_nfcore_denovotranscript_pipeline'
 include { FASTQ_TRIM_FASTP_FASTQC     } from '../subworkflows/nf-core/fastq_trim_fastp_fastqc/main'
 include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
 include { fromSamplesheet             } from 'plugin/nf-validation'
@@ -28,6 +29,9 @@ include { methodsDescriptionText      } from '../subworkflows/local/utils_nfcore
 include { SORTMERNA                   } from '../modules/nf-core/sortmerna/main'
 include { FASTQC as FASTQC_FINAL      } from '../modules/nf-core/fastqc/main'
 include { CAT_FASTQ                   } from '../modules/nf-core/cat/fastq/main'
+include { TRINITY                     } from '../modules/nf-core/trinity/main'
+include { TRINITY as TRINITY_NO_NORM  } from '../modules/nf-core/trinity/main'
+
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN MAIN WORKFLOW
@@ -45,22 +49,10 @@ workflow DENOVOTRANSCRIPT {
     ch_multiqc_files = Channel.empty()
 
     //
-    // Create channel from input file provided through params.input
-    //
-
-    Channel
-        .fromSamplesheet("input")
-        .map {
-            meta, fastq_1, fastq_2 ->
-                [ meta, [ fastq_1, fastq_2 ] ]
-        }
-        .set { ch_fastq }
-
-    //
     // MODULE: FASTQ_TRIM_FASTP_FASTQC
     //
     FASTQ_TRIM_FASTP_FASTQC (
-        ch_fastq,
+        ch_samplesheet,
         params.adapter_fasta,
         params.save_trimmed_fail,
         params.save_merged,
@@ -112,6 +104,28 @@ workflow DENOVOTRANSCRIPT {
             ch_versions = ch_versions.mix(CAT_FASTQ.out.versions)
 
             ch_assemblies = Channel.empty()
+
+            if (params.trinity) {
+                //
+                // MODULE: Trinity
+                //
+                TRINITY (
+                    CAT_FASTQ.out.reads
+                )
+                ch_versions = ch_versions.mix(TRINITY.out.versions)
+                //ch_assemblies = ch_assemblies.mix(TRINITY.out.transcript_fasta)
+            }
+
+            if (params.trinity_no_norm) {
+                //
+                // MODULE: Trinity (--no_normalize_reads)
+                //
+                TRINITY_NO_NORM (
+                    CAT_FASTQ.out.reads
+                )
+                ch_versions = ch_versions.mix(TRINITY_NO_NORM.out.versions)
+                //ch_assemblies = ch_assemblies.mix(TRINITY_NO_NORM.out.transcript_fasta)
+            }
         }
     }
 
