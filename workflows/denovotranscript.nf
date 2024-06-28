@@ -27,7 +27,7 @@ include { softwareVersionsToYAML      } from '../subworkflows/nf-core/utils_nfco
 include { methodsDescriptionText      } from '../subworkflows/local/utils_nfcore_denovotranscript_pipeline'
 include { SORTMERNA                   } from '../modules/nf-core/sortmerna/main'
 include { FASTQC as FASTQC_FINAL      } from '../modules/nf-core/fastqc/main'
-
+include { CAT_FASTQ                   } from '../modules/nf-core/cat/fastq/main'
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN MAIN WORKFLOW
@@ -94,6 +94,25 @@ workflow DENOVOTRANSCRIPT {
         )
         ch_multiqc_files = ch_multiqc_files.mix(FASTQC_FINAL.out.zip.collect{it[1]})
         ch_versions = ch_versions.mix(FASTQC_FINAL.out.versions)
+    }
+
+    if (!params.QC_only) {
+
+        if (!params.quant_only) {
+
+            // All methods used pooled reads
+            pool_ch = ch_filtered_reads.collect { meta, fastq -> fastq }.map { [[id:'pooled_reads', single_end:false], it] }
+
+            //
+            // MODULE: CAT_FASTQ
+            //
+            CAT_FASTQ (
+                pool_ch
+            )
+            ch_versions = ch_versions.mix(CAT_FASTQ.out.versions)
+
+            ch_assemblies = Channel.empty()
+        }
     }
 
     //
