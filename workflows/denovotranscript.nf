@@ -31,6 +31,7 @@ include { FASTQC as FASTQC_FINAL      } from '../modules/nf-core/fastqc/main'
 include { CAT_FASTQ                   } from '../modules/nf-core/cat/fastq/main'
 include { TRINITY                     } from '../modules/nf-core/trinity/main'
 include { TRINITY as TRINITY_NO_NORM  } from '../modules/nf-core/trinity/main'
+include { SPADES                      } from '../modules/nf-core/spades/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -113,7 +114,7 @@ workflow DENOVOTRANSCRIPT {
                     CAT_FASTQ.out.reads
                 )
                 ch_versions = ch_versions.mix(TRINITY.out.versions)
-                //ch_assemblies = ch_assemblies.mix(TRINITY.out.transcript_fasta)
+                ch_assemblies = ch_assemblies.mix(TRINITY.out.transcript_fasta)
             }
 
             if (params.trinity_no_norm) {
@@ -124,7 +125,31 @@ workflow DENOVOTRANSCRIPT {
                     CAT_FASTQ.out.reads
                 )
                 ch_versions = ch_versions.mix(TRINITY_NO_NORM.out.versions)
-                //ch_assemblies = ch_assemblies.mix(TRINITY_NO_NORM.out.transcript_fasta)
+                ch_assemblies = ch_assemblies.mix(TRINITY_NO_NORM.out.transcript_fasta)
+            }
+
+            if (params.rnaspades) {
+                CAT_FASTQ.out.reads.map { meta, illumina ->
+                    [ meta, illumina, [], [] ] }.set { spades_ch }
+
+                //
+                // MODULE: SPADES
+                //
+                SPADES (
+                    spades_ch,
+                    [],
+                    []
+                )
+                ch_versions = ch_versions.mix(SPADES.out.versions)
+                ch_assemblies = ch_assemblies.mix(SPADES.out.transcripts)
+
+                if (params.soft_filtered_transcripts) {
+                    ch_assemblies = ch_assemblies.mix(SPADES.out.soft_filtered_transcripts)
+                }
+
+                if (params.hard_filtered_transcripts) {
+                    ch_assemblies = ch_assemblies.mix(SPADES.out.hard_filtered_transcripts)
+                }
             }
         }
     }
