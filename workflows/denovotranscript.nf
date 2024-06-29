@@ -94,13 +94,13 @@ workflow DENOVOTRANSCRIPT {
         if (!params.quant_only) {
 
             // All methods used pooled reads
-            pool_ch = ch_filtered_reads.collect { meta, fastq -> fastq }.map { [[id:'pooled_reads', single_end:false], it] }
+            ch_pool = ch_filtered_reads.collect { meta, fastq -> fastq }.map { [[id:'pooled_reads', single_end:false], it] }
 
             //
             // MODULE: CAT_FASTQ
             //
             CAT_FASTQ (
-                pool_ch
+                ch_pool
             )
             ch_versions = ch_versions.mix(CAT_FASTQ.out.versions)
 
@@ -130,13 +130,13 @@ workflow DENOVOTRANSCRIPT {
 
             if (params.rnaspades) {
                 CAT_FASTQ.out.reads.map { meta, illumina ->
-                    [ meta, illumina, [], [] ] }.set { spades_ch }
+                    [ meta, illumina, [], [] ] }.set { ch_spades }
 
                 //
                 // MODULE: SPADES
                 //
                 SPADES (
-                    spades_ch,
+                    ch_spades,
                     [],
                     []
                 )
@@ -151,6 +151,10 @@ workflow DENOVOTRANSCRIPT {
                     ch_assemblies = ch_assemblies.mix(SPADES.out.hard_filtered_transcripts)
                 }
             }
+
+            ch_assemblies = ch_assemblies
+                .collect { meta, fasta -> fasta }
+                .map {[ [id:'all_assembled', single_end:false], it ] }
         }
     }
 
