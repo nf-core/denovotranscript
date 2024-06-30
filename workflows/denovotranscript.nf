@@ -34,7 +34,9 @@ include { TRINITY as TRINITY_NO_NORM  } from '../modules/nf-core/trinity/main'
 include { SPADES                      } from '../modules/nf-core/spades/main'
 include { CAT_CAT                     } from '../modules/nf-core/cat/cat/main'
 include { EVIGENE_TR2AACDS            } from '../modules/local/evigene_tr2aacds/main'
-include { BUSCO_BUSCO                } from '../modules/nf-core/busco/busco/main'
+include { BUSCO_BUSCO                 } from '../modules/nf-core/busco/busco/main'
+include { SALMON_INDEX                } from '../modules/nf-core/salmon/index/main'
+include { SALMON_QUANT                } from '../modules/nf-core/salmon/quant/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -95,7 +97,7 @@ workflow DENOVOTRANSCRIPT {
 
         if (!params.quant_only) {
 
-            // All methods used pooled reads
+            // All methods use pooled reads
             ch_pool = ch_filtered_reads.collect { meta, fastq -> fastq }.map { [[id:'pooled_reads', single_end:false], it] }
 
             //
@@ -110,7 +112,7 @@ workflow DENOVOTRANSCRIPT {
 
             if (params.trinity) {
                 //
-                // MODULE: Trinity
+                // MODULE: TRINITY
                 //
                 TRINITY (
                     CAT_FASTQ.out.reads
@@ -121,7 +123,7 @@ workflow DENOVOTRANSCRIPT {
 
             if (params.trinity_no_norm) {
                 //
-                // MODULE: Trinity (--no_normalize_reads)
+                // MODULE: TRINITY_NO_NORM
                 //
                 TRINITY_NO_NORM (
                     CAT_FASTQ.out.reads
@@ -156,7 +158,7 @@ workflow DENOVOTRANSCRIPT {
 
             ch_assemblies = ch_assemblies
                 .collect { meta, fasta -> fasta }
-                .map {[ [id:'all_assembled', single_end:false], it ] }
+                .map { [[id:'all_assembled', single_end:false], it ] }
 
             //
             // MODULE: CAT_CAT
@@ -192,6 +194,32 @@ workflow DENOVOTRANSCRIPT {
             ch_versions = ch_versions.mix(BUSCO_BUSCO.out.versions)
 
         }
+
+        ch_transcripts_fa = ch_transcripts.collect { meta, fasta -> fasta }
+        if (params.quant_only) {
+            ch_transcripts_fa = Channel.fromPath(params.transcripts_fa, checkIfExists: true)
+        }
+
+        //
+        // MODULE: SALMON_INDEX
+        //
+        SALMON_INDEX (
+            ch_transcripts_fa
+        )
+        ch_versions = ch_versions.mix(SALMON_INDEX.out.versions)
+
+        //
+        // MODULE: SALMON_QUANT
+        //
+        SALMON_QUANT (
+            ch_filtered_reads,
+            SALMON_INDEX.out.index,
+            ch_transcripts_fa,
+            params.lib_type
+        )
+        ch_multiqc_files = ch_multiqc_files.mix(SALMON_QUANT.out.results.collect{it[1]})
+        ch_versions = ch_versions.mix(SALMON_QUANT.out.versions)
+
     }
 
     //

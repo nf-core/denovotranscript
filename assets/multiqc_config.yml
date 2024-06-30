@@ -29,6 +29,7 @@ module_order:
       path_filters:
         - "*/*_final_*.zip"
   - busco
+  - salmon
 
 export_plots: true
 

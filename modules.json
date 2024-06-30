@@ -5,6 +5,11 @@
         "https://github.com/nf-core/modules.git": {
             "modules": {
                 "nf-core": {
+                    "busco/busco": {
+                        "branch": "master",
+                        "git_sha": "17486961b8b1ab1aae258c83a7e947b40d8ab670",
+                        "installed_by": ["modules"]
+                    },
                     "cat/cat": {
                         "branch": "master",
                         "git_sha": "9437e6053dccf4aafa022bfd6e7e9de67e625af8",
@@ -28,6 +33,16 @@
                     "multiqc": {
                         "branch": "master",
                         "git_sha": "b7ebe95761cd389603f9cc0e0dc384c0f663815a",
+                        "installed_by": ["modules"]
+                    },
+                    "salmon/index": {
+                        "branch": "master",
+                        "git_sha": "cb6b2b94fc40dea58f0b1e3dd095f3dd24f2ac8a",
+                        "installed_by": ["modules"]
+                    },
+                    "salmon/quant": {
+                        "branch": "master",
+                        "git_sha": "727232afb8294b53dd9d05bfe469b70cce1675bb",
                         "installed_by": ["modules"]
                     },
                     "sortmerna": {
