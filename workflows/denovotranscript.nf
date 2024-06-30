@@ -33,6 +33,7 @@ include { TRINITY                     } from '../modules/nf-core/trinity/main'
 include { TRINITY as TRINITY_NO_NORM  } from '../modules/nf-core/trinity/main'
 include { SPADES                      } from '../modules/nf-core/spades/main'
 include { CAT_CAT                     } from '../modules/nf-core/cat/cat/main'
+include { EVIGENE_TR2AACDS            } from '../modules/local/evigene_tr2aacds/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -68,7 +69,6 @@ workflow DENOVOTRANSCRIPT {
 
     if (params.remove_ribo_rna) {
         ch_sortmerna_fastas = Channel.from(ch_ribo_db.readLines()).map { row -> file(row, checkIfExists: true) }.collect()
-        //ch_sortmerna_index = params.sortmerna_index ? Channel.fromPath(params.sortmerna_index, checkIfExists: true) : Channel.empty()
         //
         // MODULE: SORTMERNA
         //
@@ -164,6 +164,15 @@ workflow DENOVOTRANSCRIPT {
                 ch_assemblies
             )
             ch_versions = ch_versions.mix(CAT_CAT.out.versions)
+
+            //
+            // MODULE: EVIGENE_TR2AACDS
+            //
+            EVIGENE_TR2AACDS (
+                CAT_CAT.out.file_out
+            )
+            ch_versions = ch_versions.mix(EVIGENE_TR2AACDS.out.versions)
+
         }
     }
 
