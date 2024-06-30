@@ -38,12 +38,14 @@
                     "salmon/index": {
                         "branch": "master",
                         "git_sha": "cb6b2b94fc40dea58f0b1e3dd095f3dd24f2ac8a",
-                        "installed_by": ["modules"]
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/salmon/index/salmon-index.diff"
                     },
                     "salmon/quant": {
                         "branch": "master",
                         "git_sha": "727232afb8294b53dd9d05bfe469b70cce1675bb",
-                        "installed_by": ["modules"]
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/salmon/quant/salmon-quant.diff"
                     },
                     "sortmerna": {
                         "branch": "master",
@@ -60,7 +62,8 @@
                     "trinity": {
                         "branch": "master",
                         "git_sha": "e06c5f45395d6e34531257b125d410a298a3bd4f",
-                        "installed_by": ["modules"]
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/trinity/trinity.diff"
                     }
                 }
             },
