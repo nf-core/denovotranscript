@@ -34,6 +34,7 @@ include { TRINITY as TRINITY_NO_NORM  } from '../modules/nf-core/trinity/main'
 include { SPADES                      } from '../modules/nf-core/spades/main'
 include { CAT_CAT                     } from '../modules/nf-core/cat/cat/main'
 include { EVIGENE_TR2AACDS            } from '../modules/local/evigene_tr2aacds/main'
+include { BUSCO_BUSCO                } from '../modules/nf-core/busco/busco/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -172,6 +173,23 @@ workflow DENOVOTRANSCRIPT {
                 CAT_CAT.out.file_out
             )
             ch_versions = ch_versions.mix(EVIGENE_TR2AACDS.out.versions)
+
+            ch_transcripts = EVIGENE_TR2AACDS.out.okayset.map { meta, dir ->
+                def mrna_file = file("$dir/*okay.mrna")
+                return [ meta, mrna_file ]}
+
+            //
+            // MODULE: BUSCO
+            //
+            BUSCO_BUSCO (
+                ch_transcripts,
+                params.busco_mode,
+                params.busco_lineage,
+                params.busco_lineages_path,
+                params.busco_config
+            )
+            ch_multiqc_files = ch_multiqc_files.mix(BUSCO_BUSCO.out.short_summaries_txt.collect{it[1]})
+            ch_versions = ch_versions.mix(BUSCO_BUSCO.out.versions)
 
         }
     }

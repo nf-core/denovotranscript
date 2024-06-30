@@ -28,6 +28,7 @@ module_order:
         fastp (if used) and filtering with SortMeRNA."
       path_filters:
         - "*/*_final_*.zip"
+  - busco
 
 export_plots: true
 
