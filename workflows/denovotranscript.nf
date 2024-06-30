@@ -14,29 +14,51 @@ if (params.remove_ribo_rna) {
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS
+    IMPORT LOCAL MODULES/SUBWORKFLOWS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
+//
+// LOCAL MODULES
+//
+include { EVIGENE_TR2AACDS            } from '../modules/local/evigene_tr2aacds/main'
+
+//
+// LOCAL SUBWORKFLOWS
+//
+include { methodsDescriptionText      } from '../subworkflows/local/utils_nfcore_denovotranscript_pipeline'
 include { validateInputSamplesheet    } from '../subworkflows/local/utils_nfcore_denovotranscript_pipeline'
-include { FASTQ_TRIM_FASTP_FASTQC     } from '../subworkflows/nf-core/fastq_trim_fastp_fastqc/main'
-include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
+
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    IMPORT NF-CORE MODULES/SUBWORKFLOWS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+
+//
+// NF-CORE MODULES/PLUGINS
+//
 include { fromSamplesheet             } from 'plugin/nf-validation'
 include { paramsSummaryMap            } from 'plugin/nf-validation'
-include { paramsSummaryMultiqc        } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { softwareVersionsToYAML      } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { methodsDescriptionText      } from '../subworkflows/local/utils_nfcore_denovotranscript_pipeline'
-include { SORTMERNA                   } from '../modules/nf-core/sortmerna/main'
-include { FASTQC as FASTQC_FINAL      } from '../modules/nf-core/fastqc/main'
+
+include { BUSCO_BUSCO                 } from '../modules/nf-core/busco/busco/main'
+include { CAT_CAT                     } from '../modules/nf-core/cat/cat/main'
 include { CAT_FASTQ                   } from '../modules/nf-core/cat/fastq/main'
+include { FASTQC as FASTQC_FINAL      } from '../modules/nf-core/fastqc/main'
+include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
+include { SORTMERNA                   } from '../modules/nf-core/sortmerna/main'
+include { SPADES                      } from '../modules/nf-core/spades/main'
 include { TRINITY                     } from '../modules/nf-core/trinity/main'
 include { TRINITY as TRINITY_NO_NORM  } from '../modules/nf-core/trinity/main'
-include { SPADES                      } from '../modules/nf-core/spades/main'
-include { CAT_CAT                     } from '../modules/nf-core/cat/cat/main'
-include { EVIGENE_TR2AACDS            } from '../modules/local/evigene_tr2aacds/main'
-include { BUSCO_BUSCO                 } from '../modules/nf-core/busco/busco/main'
 include { SALMON_INDEX                } from '../modules/nf-core/salmon/index/main'
 include { SALMON_QUANT                } from '../modules/nf-core/salmon/quant/main'
+
+//
+// NF-CORE SUBWORKFLOWS
+//
+include { FASTQ_TRIM_FASTP_FASTQC     } from '../subworkflows/nf-core/fastq_trim_fastp_fastqc/main'
+include { paramsSummaryMultiqc        } from '../subworkflows/nf-core/utils_nfcore_pipeline'
+include { softwareVersionsToYAML      } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
