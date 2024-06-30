@@ -32,6 +32,7 @@ include { CAT_FASTQ                   } from '../modules/nf-core/cat/fastq/main'
 include { TRINITY                     } from '../modules/nf-core/trinity/main'
 include { TRINITY as TRINITY_NO_NORM  } from '../modules/nf-core/trinity/main'
 include { SPADES                      } from '../modules/nf-core/spades/main'
+include { CAT_CAT                     } from '../modules/nf-core/cat/cat/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -155,6 +156,14 @@ workflow DENOVOTRANSCRIPT {
             ch_assemblies = ch_assemblies
                 .collect { meta, fasta -> fasta }
                 .map {[ [id:'all_assembled', single_end:false], it ] }
+
+            //
+            // MODULE: CAT_CAT
+            //
+            CAT_CAT (
+                ch_assemblies
+            )
+            ch_versions = ch_versions.mix(CAT_CAT.out.versions)
         }
     }
 
