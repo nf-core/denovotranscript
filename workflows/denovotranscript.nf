@@ -22,6 +22,7 @@ if (params.remove_ribo_rna) {
 // LOCAL MODULES
 //
 include { EVIGENE_TR2AACDS            } from '../modules/local/evigene_tr2aacds/main'
+include { RNAQUAST                    } from '../modules/local/rnaquast/main'
 
 //
 // LOCAL SUBWORKFLOWS
@@ -214,6 +215,14 @@ workflow DENOVOTRANSCRIPT {
             )
             ch_multiqc_files = ch_multiqc_files.mix(BUSCO_BUSCO.out.short_summaries_txt.collect{it[1]})
             ch_versions = ch_versions.mix(BUSCO_BUSCO.out.versions)
+
+            //
+            // MODULE: RNAQUAST
+            //
+            RNAQUAST (
+                ch_transcripts
+            )
+            ch_versions = ch_versions.mix(RNAQUAST.out.versions)
 
         }
 
