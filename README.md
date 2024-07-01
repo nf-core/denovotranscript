@@ -59,8 +59,6 @@ Each row represents a pair of fastq files (paired end).
 
 Now, you can run the pipeline using:
 
-<!-- TODO nf-core: update the following command to include all required parameters for a minimal example -->
-
 ```bash
 nextflow run nf-core/denovotranscript \
    -profile <docker/singularity/.../institute> \
@@ -82,11 +80,7 @@ For more details about the output files and reports, please refer to the
 
 ## Credits
 
-nf-core/denovotranscript was originally written by Avani Bhojwani.
-
-We thank the following people for their extensive assistance in the development of this pipeline:
-
-<!-- TODO nf-core: If applicable, make list of people who have also contributed -->
+nf-core/denovotranscript was written by Avani Bhojwani (@avani-bhojwani) and Timothy Little (@timslittle).
 
 ## Contributions and Support
 
