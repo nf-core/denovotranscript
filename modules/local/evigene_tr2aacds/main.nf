@@ -1,6 +1,6 @@
 process EVIGENE_TR2AACDS {
     tag "$meta.id"
-    label 'process_high'
+    label 'process_medium'
     // code from https://github.com/nf-core/modules/pull/5898 (awaiting review and merge)
     conda "bioconda::evigene=23.7.15"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
@@ -30,6 +30,7 @@ process EVIGENE_TR2AACDS {
     }
 
     def simple_name = fasta.simpleName
+    def rename_files= ( simple_name != prefix ) ? 'yes' : 'no'
     """
     # Nextflow changes the container --entrypoint to /bin/bash (container default entrypoint: /usr/local/env-execute)
     # Check for container variable initialisation script and source it.
