@@ -32,6 +32,8 @@
 
   > Gilbert, D. G. (2019). Longest protein, longest transcript or most expression, for accurate gene reconstruction of transcriptomes? bioRxiv. https://doi.org/10.1101/829184
 
+- [gawk](https://www.gnu.org/software/gawk/)
+
 - [BUSCO](https://busco.ezlab.org/)
 
   > Manni M, Berkeley MR, Seppey M, Simão FA, Zdobnov EM. BUSCO Update: Novel and Streamlined Workflows along with Broader and Deeper Phylogenetic Coverage for Scoring of Eukaryotic, Prokaryotic, and Viral Genomes. Mol Biol Evol. 2021 Sep 27;38(10):4647-4654. doi: 10.1093/molbev/msab199. PMID: 34320186; PMCID: PMC8476166.

@@ -46,6 +46,7 @@ include { BUSCO_BUSCO                 } from '../modules/nf-core/busco/busco/mai
 include { CAT_CAT                     } from '../modules/nf-core/cat/cat/main'
 include { CAT_FASTQ                   } from '../modules/nf-core/cat/fastq/main'
 include { FASTQC as FASTQC_FINAL      } from '../modules/nf-core/fastqc/main'
+include { GAWK as TX2GENE             } from '../modules/nf-core/gawk/main'
 include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
 include { SORTMERNA                   } from '../modules/nf-core/sortmerna/main'
 include { SPADES                      } from '../modules/nf-core/spades/main'
@@ -202,6 +203,18 @@ workflow DENOVOTRANSCRIPT {
             ch_transcripts = EVIGENE_TR2AACDS.out.okayset.map { meta, dir ->
                 def mrna_file = file("$dir/*okay.mrna")
                 return [ meta, mrna_file ]}
+
+            ch_pubids = EVIGENE_TR2AACDS.out.okayset.map { meta, dir ->
+                def pubids_file = file("$dir/*.pubids")
+                return [ meta, pubids_file ]}
+            //
+            // MODULE: TX2GENE
+            //
+            TX2GENE (
+                ch_pubids,
+                []
+            )
+            ch_versions = ch_versions.mix(TX2GENE.out.versions)
 
             //
             // MODULE: BUSCO

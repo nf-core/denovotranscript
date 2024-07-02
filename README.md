@@ -35,7 +35,7 @@
    - [`rnaSPAdes`](https://ablab.github.io/spades/rna.html) soft filtered transcripts outputted
    - [`rnaSPAdes`](https://ablab.github.io/spades/rna.html) hard filtered transcripts outputted
 
-6. Redundancy reduction with [`Evidential Gene tr2aacds`](http://arthropods.eugenes.org/EvidentialGene/)
+6. Redundancy reduction with [`Evidential Gene tr2aacds`](http://arthropods.eugenes.org/EvidentialGene/). A transcript to gene mapping is produced from Evidential Gene's outputs using [`gawk`](https://www.gnu.org/software/gawk/).
 7. Assembly completeness QC ([`BUSCO`](https://busco.ezlab.org/))
 8. Other assembly quality metrics ([`rnaQUAST`](https://github.com/ablab/rnaquast))
 9. Pseudo-alignment and quantification ([`Salmon`](https://combine-lab.github.io/salmon/))
