@@ -5,10 +5,10 @@ process RNAQUAST {
     // code from https://github.com/timslittle/modules/blob/rnaquast/modules/nf-core/rnaquast/main.nf
     // and https://github.com/avani-bhojwani/TransFuse/blob/dev/modules/local/rnaquast.nf
 
-    conda "bioconda::rnaquast=2.2.3"
+    conda "bioconda::rnaquast=2.3.0"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/rnaquast:2.2.3--h9ee0642_0' :
-        'biocontainers/rnaquast:2.2.3--h9ee0642_0' }"
+        'https://depot.galaxyproject.org/singularity/rnaquast:2.3.0--h9ee0642_0' :
+        'biocontainers/rnaquast:2.3.0--h9ee0642_0' }"
 
     input:
     tuple val(meta), path(fasta)
@@ -30,7 +30,6 @@ process RNAQUAST {
     def prefix = task.ext.prefix ?: "${meta.id}"
     def reference = params.fasta ? "--reference ${params.fasta}" : ""
     def gtf = params.gtf ? "--gtf ${params.gtf}" : ""
-    def gene_mark = params.gene_mark ? "--gene_mark" : ""
 
     """
     rnaQUAST.py \\
@@ -40,12 +39,11 @@ process RNAQUAST {
         --labels $prefix \\
         $reference \\
         $gtf \\
-        $gene_mark \\
         $args
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        rnaquast: \$(rnaQUAST.py | grep "QUALITY ASSESSMENT" | head -n1 | awk -F " v." '{print \$2}')
+        rnaquast: \$(rnaQUAST.py -h | grep "QUALITY ASSESSMENT" | head -n1 | awk -F " v." '{print \$2}')
     END_VERSIONS
     """
 }
