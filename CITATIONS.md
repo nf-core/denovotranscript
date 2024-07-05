@@ -42,6 +42,10 @@
 
   > Bushmanova E, Antipov D, Lapidus A, Suvorov V, Prjibelski AD. rnaQUAST: a quality assessment tool for de novo transcriptome assemblies. Bioinformatics. 2016 Jul 15;32(14):2210-2. doi: 10.1093/bioinformatics/btw218. Epub 2016 Apr 23. PMID: 27153654.
 
+- [TransRate](https://hibberdlab.com/transrate/)
+
+  > Smith-Unna R, Boursnell C, Patro R, Hibberd JM, Kelly S. TransRate: reference-free quality assessment of de novo transcriptome assemblies. Genome Res. 2016 Aug;26(8):1134-44. doi: 10.1101/gr.196469.115. Epub 2016 Jun 1. PMID: 27252236; PMCID: PMC4971766.
+
 - [Salmon](https://salmon.readthedocs.io/en/latest/salmon.html)
 
   > Patro R, Duggal G, Love MI, Irizarry RA, Kingsford C. Salmon provides fast and bias-aware quantification of transcript expression. Nat Methods. 2017 Apr;14(4):417-419. doi: 10.1038/nmeth.4197. Epub 2017 Mar 6. PMID: 28263959; PMCID: PMC5600148.

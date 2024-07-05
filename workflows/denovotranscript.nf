@@ -21,8 +21,9 @@ if (params.remove_ribo_rna) {
 //
 // LOCAL MODULES
 //
-include { EVIGENE_TR2AACDS            } from '../modules/local/evigene_tr2aacds/main'
-include { RNAQUAST                    } from '../modules/local/rnaquast/main'
+include { EVIGENE_TR2AACDS                } from '../modules/local/evigene_tr2aacds/main'
+include { RNAQUAST                        } from '../modules/local/rnaquast/main'
+include { ORP_TRANSRATE as TRANSRATE      } from '../modules/local/orp_transrate/main'
 
 //
 // LOCAL SUBWORKFLOWS
@@ -237,6 +238,18 @@ workflow DENOVOTRANSCRIPT {
             )
             ch_versions = ch_versions.mix(RNAQUAST.out.versions)
 
+            // only run if profile is not conda or mamba
+            if (workflow.profile.tokenize(',').intersect(['conda', 'mamba']).size() == 0) {
+                //
+                // MODULE: TRANSRATE
+                //
+                TRANSRATE (
+                    ch_transcripts,
+                    CAT_FASTQ.out.reads,
+                    params.transrate_reference
+                )
+                ch_versions = ch_versions.mix(TRANSRATE.out.versions)
+            }
         }
 
         ch_transcripts_fa = ch_transcripts.collect { meta, fasta -> fasta }

@@ -38,8 +38,9 @@
 6. Redundancy reduction with [`Evidential Gene tr2aacds`](http://arthropods.eugenes.org/EvidentialGene/). A transcript to gene mapping is produced from Evidential Gene's outputs using [`gawk`](https://www.gnu.org/software/gawk/).
 7. Assembly completeness QC ([`BUSCO`](https://busco.ezlab.org/))
 8. Other assembly quality metrics ([`rnaQUAST`](https://github.com/ablab/rnaquast))
-9. Pseudo-alignment and quantification ([`Salmon`](https://combine-lab.github.io/salmon/))
-10. Present HTML report for raw reads, trimmed reads, BUSCO, and Salmon ([`MultiQC`](http://multiqc.info/))
+9. Transcriptome quality assessment with [`TransRate`](https://hibberdlab.com/transrate/), including the use of reads for assembly evaluation. This step is not performed if profile is set to `conda` or `mamba`.
+10. Pseudo-alignment and quantification ([`Salmon`](https://combine-lab.github.io/salmon/))
+11. Present HTML report for raw reads, trimmed reads, BUSCO, and Salmon ([`MultiQC`](http://multiqc.info/))
 
 ## Usage
 

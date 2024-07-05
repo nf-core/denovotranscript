@@ -214,12 +214,22 @@
                 "gtf": {
                     "type": "string",
                     "description": "File with gene coordinates in GTF/GFF format (needs information about parent relations). rnaQUAST authors recommend to use files downloaded from GENCODE or Ensembl."
-                },
-                "gene_mark": {
-                    "type": "boolean",
-                    "description": "Use with GeneMarkS-T gene prediction tool."
                 }
             }
+        },
+        "transrate_options": {
+            "title": "TransRate options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "transrate_reference": {
+                    "type": "string",
+                    "default": "[]",
+                    "description": "Path to FASTA file of reference set of proteins or transcripts from a related species"
+                }
+            },
+            "fa_icon": "fas fa-align-center"
         },
         "salmon_options": {
             "title": "Salmon options",
@@ -480,6 +490,9 @@
         },
         {
             "$ref": "#/definitions/rnaquast_options"
+        },
+        {
+            "$ref": "#/definitions/transrate_options"
         },
         {
             "$ref": "#/definitions/salmon_options"
