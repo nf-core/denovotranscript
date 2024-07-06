@@ -21,7 +21,6 @@ if (params.remove_ribo_rna) {
 //
 // LOCAL MODULES
 //
-include { EVIGENE_TR2AACDS                } from '../modules/local/evigene_tr2aacds/main'
 include { RNAQUAST                        } from '../modules/local/rnaquast/main'
 include { ORP_TRANSRATE as TRANSRATE      } from '../modules/local/orp_transrate/main'
 
@@ -46,6 +45,7 @@ include { paramsSummaryMap            } from 'plugin/nf-validation'
 include { BUSCO_BUSCO                 } from '../modules/nf-core/busco/busco/main'
 include { CAT_CAT                     } from '../modules/nf-core/cat/cat/main'
 include { CAT_FASTQ                   } from '../modules/nf-core/cat/fastq/main'
+include { EVIGENE_TR2AACDS            } from '../modules/nf-core/evigene/tr2aacds/main'
 include { FASTQC as FASTQC_FINAL      } from '../modules/nf-core/fastqc/main'
 include { GAWK as TX2GENE             } from '../modules/nf-core/gawk/main'
 include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
