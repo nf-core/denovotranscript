@@ -5,8 +5,8 @@
 This document describes the output produced by the pipeline. Most of the plots are taken from the MultiQC report generated from the [full test dataset](https://github.com/nf-core/test-datasets/tree/denovotranscript) for the pipeline using a command similar to the one below:
 
 ```bash
-nextflow run nf-core/transfuse \
-  -profile test, singularity \
+nextflow run nf-core/denovotranscript \
+  -profile test_full,singularity \
   --outdir <OUTDIR> \
   --extra_fastp_args='--trim_front1 15 --trim_front2 15' \
   --remove_ribo_rna \
