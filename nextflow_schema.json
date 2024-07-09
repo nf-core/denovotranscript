@@ -13,11 +13,13 @@
             "properties": {
                 "QC_only": {
                     "type": "boolean",
-                    "description": "Whether the pipeline should skip assembly steps, and only perform quantification."
+                    "description": "Whether the pipeline should only perform quality control, and skip assembly and quantification.",
+                    "default": false
                 },
-                "quant_only": {
+                "skip_assembly": {
                     "type": "boolean",
-                    "description": "Whether the pipeline should skip assembly steps, and only perform quantification."
+                    "description": "Whether the pipeline should skip assembly steps, and only perform quality control of reads and quantification. --transcript_fasta must be provided if True.",
+                    "default": false
                 }
             },
             "fa_icon": "fas fa-angle-double-right"
@@ -48,7 +50,7 @@
                 },
                 "transcript_fasta": {
                     "type": "string",
-                    "description": "Path to fasta file (not compressed) containing a transcriptome assembly. Only needed if --quant_only is True."
+                    "description": "Path to fasta file (not compressed) containing a transcriptome assembly. Only needed if --skip_assembly is True."
                 },
                 "email": {
                     "type": "string",
@@ -173,7 +175,7 @@
                 "busco_mode": {
                     "type": "string",
                     "default": "transcriptome",
-                    "description": "The mode to run Busco in. One of genome, proteins, or transcriptome"
+                    "description": "The mode to run BUSCO in. One of genome, proteins, or transcriptome"
                 },
                 "busco_lineage": {
                     "type": "string",
