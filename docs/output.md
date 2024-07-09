@@ -242,7 +242,6 @@ Transcript N50                                         1084
 
 [TransRate](https://hibberdlab.com/transrate/) can analyse assembly quality using evidence from sequencing reads and provides quality scores for contigs and assemblies.
 
-
 ```
 # from transrate.log
 
