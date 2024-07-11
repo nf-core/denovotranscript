@@ -10,6 +10,7 @@ process FASTP {
     input:
     tuple val(meta), path(reads)
     path  adapter_fasta
+    val   discard_trimmed_pass
     val   save_trimmed_fail
     val   save_merged
 
