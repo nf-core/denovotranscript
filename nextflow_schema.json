@@ -50,7 +50,7 @@
                 },
                 "transcript_fasta": {
                     "type": "string",
-                    "description": "Path to fasta file (not compressed) containing a transcriptome assembly. Only needed if --skip_assembly is True."
+                    "description": "Path to fasta file (not compressed) containing a transcriptome assembly. Only needed if `--skip_assembly` is `True`."
                 },
                 "email": {
                     "type": "string",
