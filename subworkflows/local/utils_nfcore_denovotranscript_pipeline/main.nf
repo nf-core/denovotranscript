@@ -168,7 +168,7 @@ def validateInputParameters() {
         log.warn("Unused parameter: Ignoring --transcript_fasta as pipeline was not launched with --skip_assembly mode.")
     }
 
-    if ( params.extra_trinity_args.contains("--no_normalize_reads" ) ) {
+    if ( params.extra_trinity_args && params.extra_trinity_args.contains("--no_normalize_reads" ) ) {
         error("Incompatible parameters: Please do not use --no_normalize_reads in --extra_trinity_args. Use --trinity_no_norm instead.")
     }
 
