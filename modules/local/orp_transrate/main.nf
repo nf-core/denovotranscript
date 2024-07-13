@@ -5,7 +5,7 @@ process ORP_TRANSRATE {
     // Using conda or the biocontainer for transrate results in a SNAP index error.
     // However, the error does not occur when using the tarball from the Oyster River Protocol.
     // see https://github.com/blahah/transrate/issues/248
-    container 'docker://avanibhojwani/orp_transrate:1.0.3'
+    container 'docker.io/avanibhojwani/orp_transrate:1.0.3_cv1.2'
 
     input:
     tuple val(meta), path(fasta)         // assembly file
