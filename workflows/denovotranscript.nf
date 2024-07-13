@@ -120,7 +120,7 @@ workflow DENOVOTRANSCRIPT {
 
     if (!params.QC_only) {
 
-        if (!params.quant_only) {
+        if (!params.skip_assembly) {
 
             // All methods use pooled reads
             ch_pool = ch_filtered_reads.collect { meta, fastq -> fastq }.map { [[id:'pooled_reads', single_end:false], it] }
@@ -253,7 +253,7 @@ workflow DENOVOTRANSCRIPT {
         }
 
         ch_transcripts_fa = ch_transcripts.collect { meta, fasta -> fasta }
-        if (params.quant_only) {
+        if (params.skip_assembly) {
             ch_transcripts_fa = Channel.fromPath(params.transcripts_fa, checkIfExists: true)
         }
 

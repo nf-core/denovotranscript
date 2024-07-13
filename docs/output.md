@@ -242,6 +242,37 @@ Transcript N50                                         1084
 
 [TransRate](https://hibberdlab.com/transrate/) can analyse assembly quality using evidence from sequencing reads and provides quality scores for contigs and assemblies.
 
+```log title="transrate.log"
+
+Read mapping metrics:
+-----------------------------------
+fragments                    440655
+fragments mapped             305702
+p fragments mapped             0.69
+good mappings                285522
+p good mapping                 0.65
+bad mappings                  20180
+potential bridges               168
+bases uncovered              769015
+p bases uncovered              0.12
+contigs uncovbase              2840
+p contigs uncovbase            0.38
+contigs uncovered               743
+p contigs uncovered             0.1
+contigs lowcovered             6780
+p contigs lowcovered            0.9
+contigs segmented               183
+p contigs segmented            0.02
+Read metrics done in 54 seconds
+No reference provided, skipping comparative diagnostics
+TRANSRATE ASSEMBLY SCORE     0.3126
+-----------------------------------
+TRANSRATE OPTIMAL SCORE      0.4516
+TRANSRATE OPTIMAL CUTOFF     0.0624
+good contigs                   6897
+p good contigs                 0.91
+```
+
 ## Quantification
 
 ### Salmon

@@ -155,9 +155,29 @@ workflow PIPELINE_COMPLETION {
 // Check and validate pipeline parameters
 //
 def validateInputParameters() {
+
+    if ( params.QC_only && params.skip_assembly ) {
+        error("Incompatible parameters: cannot use --skip_assembly and --QC_only modes together.")
+    }
+
+    if ( params.skip_assembly && !params.transcript_fasta ) {
+        error("Missing parameter: Please provide --transcript_fasta of a transcriptome assembly when using --skip_assembly.")
+    }
+
+    if ( params.transcript_fasta && !params.skip_assembly ) {
+        log.warn("Unused parameter: Ignoring --transcript_fasta as pipeline was not launched with --skip_assembly mode.")
+    }
+
+    if ( params.extra_trinity_args && params.extra_trinity_args.contains("--no_normalize_reads" ) ) {
+        error("Incompatible parameters: Please do not use --no_normalize_reads in --extra_trinity_args. Use --trinity_no_norm instead.")
+    }
+
+    if ( (params.soft_filtered_transcripts || params.hard_filtered_transcripts) && !params.rnaspades ) {
+            error("Missing parameter: --rnaspades is required when using --soft_filtered_transcripts or --hard_filtered_transcripts.")
+    }
+
     genomeExistsError()
 }
-
 //
 // Validate channels from input samplesheet
 //

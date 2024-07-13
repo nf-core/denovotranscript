@@ -92,7 +92,7 @@ nextflow run nf-core/denovotranscript \
   -resume
 ```
 
-4. If you created the transcriptome assembly with only one replicate per condition, you can now run the pipeline with the full samplesheet, path to `--transcript_fasta`, and `--quant_only` to quantify the expression of all samples. If you used a samplesheet with all samples in step 3, this step is not needed.
+4. If you created the transcriptome assembly with only one replicate per condition, you can now run the pipeline with the full samplesheet, path to `--transcript_fasta`, and `--skip_assembly` to quantify the expression of all samples. If you used a samplesheet with all samples in step 3, this step is not needed.
 
 ```bash
 nextflow run nf-core/denovotranscript \
@@ -102,7 +102,7 @@ nextflow run nf-core/denovotranscript \
   -profile docker \
   --extra_fastp_args='--trim_front1 15 --trim_front2 15' \
   --remove_ribo_rna \
-  --quant_only \
+  --skip_assembly \
   -resume
 ```
 
@@ -143,7 +143,7 @@ TransRate can be used for assembly quality assessment if the profile is not set 
 
 ## Quantification options
 
-You can provide the path to the transcriptome assembly fasta file with the `--transcript_fasta` parameter if you are running the pipeline in `--quant_only` mode. The `--quant_only` mode performs QC and quantification, but does not create a transcriptome assembly. The pipeline uses Salmon to quantify the expression of the reads. By default the library type is set to `A`, but you can change this with the `--lib_type` parameter.
+You can provide the path to the transcriptome assembly fasta file with the `--transcript_fasta` parameter if you are running the pipeline in `--skip_assembly` mode. The `--skip_assembly` mode performs QC and quantification, but does not create a transcriptome assembly. The pipeline uses Salmon to quantify the expression of the reads. By default the library type is set to `A`, but you can change this with the `--lib_type` parameter.
 
 ## Running the pipeline
 
