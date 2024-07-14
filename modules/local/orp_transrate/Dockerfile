@@ -33,6 +33,3 @@ ENV PATH="/opt/orp-transrate:${PATH}"
 
 # Set working directory
 WORKDIR /opt/orp-transrate
-
-# Define entrypoint to ensure the image behaves predictably
-ENTRYPOINT ["/bin/bash"]
