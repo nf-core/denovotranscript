@@ -28,8 +28,7 @@
                     "fastp": {
                         "branch": "master",
                         "git_sha": "95cf5fe0194c7bf5cb0e3027a2eb7e7c89385080",
-                        "installed_by": ["fastq_trim_fastp_fastqc", "modules"],
-                        "patch": "modules/nf-core/fastp/fastp.diff"
+                        "installed_by": ["fastq_trim_fastp_fastqc", "modules"]
                     },
                     "fastqc": {
                         "branch": "master",
