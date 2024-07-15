@@ -150,7 +150,7 @@ You can provide the path to the transcriptome assembly fasta file with the `--tr
 The typical command for running the pipeline is as follows:
 
 ```bash
-nextflow run nf-core/denovotranscript --input ./samplesheet.csv --outdir ./results --genome GRCh37 -profile docker
+nextflow run nf-core/denovotranscript --input ./samplesheet.csv --outdir ./results -profile docker
 ```
 
 This will launch the pipeline with the `docker` configuration profile. See below for more information about profiles.
@@ -183,7 +183,6 @@ with `params.yaml` containing:
 ```yaml
 input: './samplesheet.csv'
 outdir: './results/'
-genome: 'GRCh37'
 <...>
 ```
 
