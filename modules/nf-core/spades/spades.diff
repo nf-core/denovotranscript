@@ -26,10 +26,27 @@ Changes in module 'nf-core/spades'
  
      when:
      task.ext.when == null || task.ext.when
-@@ -56,6 +58,14 @@
+@@ -34,6 +36,7 @@
+     def nanopore_reads = nanopore ? "--nanopore $nanopore" : ""
+     def custom_hmms = hmm ? "--custom-hmms $hmm" : ""
+     def reads = yml ? "--dataset $yml" : "$illumina_reads $pacbio_reads $nanopore_reads"
++    def ss = params.ss ? "--ss ${params.ss}" : ""
+     """
+     spades.py \\
+         $args \\
+@@ -41,6 +44,7 @@
+         --memory $maxmem \\
+         $custom_hmms \\
+         $reads \\
++        $ss \\
+         -o ./
+     mv spades.log ${prefix}.spades.log
+ 
+@@ -55,6 +59,14 @@
+     if [ -f transcripts.fasta ]; then
          mv transcripts.fasta ${prefix}.transcripts.fa
          gzip -n ${prefix}.transcripts.fa
-     fi
++    fi
 +    if [ -f soft_filtered_transcripts.fasta ]; then
 +        mv soft_filtered_transcripts.fasta ${prefix}.soft_filtered_transcripts.fa
 +        gzip -n ${prefix}.soft_filtered_transcripts.fa
@@ -37,11 +54,15 @@ Changes in module 'nf-core/spades'
 +    if [ -f hard_filtered_transcripts.fasta ]; then
 +        mv hard_filtered_transcripts.fasta ${prefix}.hard_filtered_transcripts.fa
 +        gzip -n ${prefix}.hard_filtered_transcripts.fa
-+    fi
+     fi
      if [ -f assembly_graph_with_scaffolds.gfa ]; then
          mv assembly_graph_with_scaffolds.gfa ${prefix}.assembly.gfa
-         gzip -n ${prefix}.assembly.gfa
-@@ -85,6 +95,8 @@
+@@ -81,10 +93,13 @@
+     def nanopore_reads = nanopore ? "--nanopore $nanopore" : ""
+     def custom_hmms = hmm ? "--custom-hmms $hmm" : ""
+     def reads = yml ? "--dataset $yml" : "$illumina_reads $pacbio_reads $nanopore_reads"
++    def ss = params.ss ? "--ss ${params.ss}" : ""
+     """
      echo "" | gzip > ${prefix}.scaffolds.fa.gz
      echo "" | gzip > ${prefix}.contigs.fa.gz
      echo "" | gzip > ${prefix}.transcripts.fa.gz

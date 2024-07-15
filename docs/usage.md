@@ -127,7 +127,7 @@ assemblers/methods/outputs to want to include as inputs to Evidential Gene:
 - `--soft_filtered_transcripts` (to include soft filtered transcripts from rnaSPAdes as inputs to Evidential Gene)
 - `--hard_filtered_transcripts` (to include hard filtered transcripts from rnaSPAdes as inputs to Evidential Gene)
 
-Extra parameters can be provided to Trinity using the `extra_trinity_args` parameter.
+Extra parameters can be provided to Trinity using the `extra_trinity_args` parameter. The `ss` param can be used to set the strand-specific type for rnaSPAdes.
 
 All assemblies are concatenated into one and redundancy is reduced using
 Evidential Gene's tr2aacds tool. You can provide additional parameters to tr2aacds
@@ -150,7 +150,7 @@ You can provide the path to the transcriptome assembly fasta file with the `--tr
 The typical command for running the pipeline is as follows:
 
 ```bash
-nextflow run nf-core/denovotranscript --input ./samplesheet.csv --outdir ./results --genome GRCh37 -profile docker
+nextflow run nf-core/denovotranscript --input ./samplesheet.csv --outdir ./results -profile docker
 ```
 
 This will launch the pipeline with the `docker` configuration profile. See below for more information about profiles.
@@ -183,7 +183,6 @@ with `params.yaml` containing:
 ```yaml
 input: './samplesheet.csv'
 outdir: './results/'
-genome: 'GRCh37'
 <...>
 ```
 

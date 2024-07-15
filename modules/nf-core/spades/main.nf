@@ -36,6 +36,7 @@ process SPADES {
     def nanopore_reads = nanopore ? "--nanopore $nanopore" : ""
     def custom_hmms = hmm ? "--custom-hmms $hmm" : ""
     def reads = yml ? "--dataset $yml" : "$illumina_reads $pacbio_reads $nanopore_reads"
+    def ss = params.ss ? "--ss ${params.ss}" : ""
     """
     spades.py \\
         $args \\
@@ -43,6 +44,7 @@ process SPADES {
         --memory $maxmem \\
         $custom_hmms \\
         $reads \\
+        $ss \\
         -o ./
     mv spades.log ${prefix}.spades.log
 
@@ -91,6 +93,7 @@ process SPADES {
     def nanopore_reads = nanopore ? "--nanopore $nanopore" : ""
     def custom_hmms = hmm ? "--custom-hmms $hmm" : ""
     def reads = yml ? "--dataset $yml" : "$illumina_reads $pacbio_reads $nanopore_reads"
+    def ss = params.ss ? "--ss ${params.ss}" : ""
     """
     echo "" | gzip > ${prefix}.scaffolds.fa.gz
     echo "" | gzip > ${prefix}.contigs.fa.gz

@@ -13,13 +13,11 @@
             "properties": {
                 "QC_only": {
                     "type": "boolean",
-                    "description": "Whether the pipeline should only perform quality control, and skip assembly and quantification.",
-                    "default": false
+                    "description": "Whether the pipeline should only perform quality control, and skip assembly and quantification."
                 },
                 "skip_assembly": {
                     "type": "boolean",
-                    "description": "Whether the pipeline should skip assembly steps, and only perform quality control of reads and quantification. --transcript_fasta must be provided if True.",
-                    "default": false
+                    "description": "Whether the pipeline should skip assembly steps, and only perform quality control of reads and quantification. --transcript_fasta must be provided if True."
                 }
             },
             "fa_icon": "fas fa-angle-double-right"
@@ -158,6 +156,11 @@
                 "hard_filtered_transcripts": {
                     "type": "boolean",
                     "description": "For including soft filtered transcripts (in addition to the medium filtered transcripts) from rnaSPAdes in the input to EvidentialGene tr2aacds."
+                },
+                "ss": {
+                    "type": "string",
+                    "description": "Set strand-specific type for rnaSPAdes. Use `--ss rf` when first read in pair corresponds to reverse gene strand (antisense data, e.g. obtained via dUTP protocol) and `--ss fr` otherwise (forward).",
+                    "help_text": "Note, that strand-specificity is not related and should not be confused with FR and RF orientation of paired reads. RNA-Seq paired-end reads typically have forward-reverse orientation (--> <--), which is assumed by default and no additional options are needed."
                 },
                 "extra_tr2aacds_args": {
                     "type": "string",
