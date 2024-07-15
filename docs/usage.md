@@ -127,7 +127,7 @@ assemblers/methods/outputs to want to include as inputs to Evidential Gene:
 - `--soft_filtered_transcripts` (to include soft filtered transcripts from rnaSPAdes as inputs to Evidential Gene)
 - `--hard_filtered_transcripts` (to include hard filtered transcripts from rnaSPAdes as inputs to Evidential Gene)
 
-Extra parameters can be provided to Trinity using the `extra_trinity_args` parameter.
+Extra parameters can be provided to Trinity using the `extra_trinity_args` parameter. The `ss` param can be used to set the strand-specific type for rnaSPAdes.
 
 All assemblies are concatenated into one and redundancy is reduced using
 Evidential Gene's tr2aacds tool. You can provide additional parameters to tr2aacds
