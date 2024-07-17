@@ -82,9 +82,10 @@ workflow DENOVOTRANSCRIPT {
     //
     // MODULE: FASTQ_TRIM_FASTP_FASTQC
     //
+
     FASTQ_TRIM_FASTP_FASTQC (
         ch_samplesheet,
-        params.adapter_fasta,
+        params.adapter_fasta ?: [],
         params.save_trimmed_fail,
         params.save_merged,
         params.skip_fastp,
@@ -224,8 +225,8 @@ workflow DENOVOTRANSCRIPT {
                 ch_transcripts,
                 params.busco_mode,
                 params.busco_lineage,
-                params.busco_lineages_path,
-                params.busco_config
+                params.busco_lineages_path ?: [],
+                params.busco_config ?: [],
             )
             ch_multiqc_files = ch_multiqc_files.mix(BUSCO_BUSCO.out.short_summaries_txt.collect{it[1]})
             ch_versions = ch_versions.mix(BUSCO_BUSCO.out.versions)
@@ -246,7 +247,7 @@ workflow DENOVOTRANSCRIPT {
                 TRANSRATE (
                     ch_transcripts,
                     CAT_FASTQ.out.reads,
-                    params.transrate_reference
+                    params.transrate_reference ?: []
                 )
                 ch_versions = ch_versions.mix(TRANSRATE.out.versions)
             }
