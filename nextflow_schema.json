@@ -11,7 +11,7 @@
             "description": "",
             "default": "",
             "properties": {
-                "QC_only": {
+                "qc_only": {
                     "type": "boolean",
                     "description": "Whether the pipeline should only perform quality control, and skip assembly and quantification."
                 },
@@ -72,7 +72,6 @@
             "properties": {
                 "adapter_fasta": {
                     "type": "string",
-                    "default": "[]",
                     "description": "File in FASTA format containing possible adapters to remove. Accepted formats: *.{fasta,fna,fas,fa}"
                 },
                 "save_trimmed_fail": {
@@ -116,11 +115,6 @@
                 "save_non_ribo_reads": {
                     "type": "boolean",
                     "description": "If this option is specified, intermediate FastQ files containing non-rRNA reads will be saved in the results directory."
-                },
-                "sortmerna_index": {
-                    "type": "string",
-                    "default": "[]",
-                    "description": "Path to index directory of a previous sortmerna run"
                 }
             },
             "fa_icon": "fas fa-filter"
@@ -131,23 +125,14 @@
             "description": "",
             "default": "",
             "properties": {
-                "trinity": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "For creating an assembly with Trinity (with normalized reads)."
-                },
-                "trinity_no_norm": {
-                    "type": "boolean",
-                    "description": "For creating an assembly with Trinity with non-normalized reads."
+                "assemblers": {
+                    "type": "string",
+                    "default": "trinity,rnaspades",
+                    "description": "Assemblers to use. Possible options include \"trinity\", \"trinity_no_norm\" (trinity without normalized reads), and \"rnaspades\"."
                 },
                 "extra_trinity_args": {
                     "type": "string",
                     "description": "Extra arguments to pass to Trinity command in addition to defaults. Applies to both trinity and trinity_no_norm."
-                },
-                "rnaspades": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "For creating an assembly with rnaSPAdes"
                 },
                 "soft_filtered_transcripts": {
                     "type": "boolean",
@@ -187,12 +172,10 @@
                 },
                 "busco_lineages_path": {
                     "type": "string",
-                    "default": "[]",
                     "description": "Path to local BUSCO lineages directory."
                 },
                 "busco_config": {
                     "type": "string",
-                    "default": "[]",
                     "description": "Path to BUSCO config file."
                 }
             },
@@ -230,7 +213,6 @@
             "properties": {
                 "transrate_reference": {
                     "type": "string",
-                    "default": "[]",
                     "description": "Path to FASTA file of reference set of proteins or transcripts from a related species"
                 }
             },

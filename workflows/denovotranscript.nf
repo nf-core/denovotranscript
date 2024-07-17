@@ -21,8 +21,8 @@ if (params.remove_ribo_rna) {
 //
 // LOCAL MODULES
 //
-include { RNAQUAST                        } from '../modules/local/rnaquast/main'
-include { ORP_TRANSRATE as TRANSRATE      } from '../modules/local/orp_transrate/main'
+include { RNAQUAST                    } from '../modules/local/rnaquast/main'
+include { ORP_TRANSRATE as TRANSRATE  } from '../modules/local/orp_transrate/main'
 
 //
 // LOCAL SUBWORKFLOWS
@@ -82,9 +82,10 @@ workflow DENOVOTRANSCRIPT {
     //
     // MODULE: FASTQ_TRIM_FASTP_FASTQC
     //
+
     FASTQ_TRIM_FASTP_FASTQC (
         ch_samplesheet,
-        params.adapter_fasta,
+        params.adapter_fasta ?: [],
         params.save_trimmed_fail,
         params.save_merged,
         params.skip_fastp,
@@ -118,7 +119,7 @@ workflow DENOVOTRANSCRIPT {
         ch_versions = ch_versions.mix(FASTQC_FINAL.out.versions)
     }
 
-    if (!params.QC_only) {
+    if (!params.qc_only) {
 
         if (!params.skip_assembly) {
 
@@ -135,7 +136,9 @@ workflow DENOVOTRANSCRIPT {
 
             ch_assemblies = Channel.empty()
 
-            if (params.trinity) {
+            def assemblers = params.assemblers.tokenize(',')
+
+            if (assemblers.contains('trinity')) {
                 //
                 // MODULE: TRINITY
                 //
@@ -146,7 +149,7 @@ workflow DENOVOTRANSCRIPT {
                 ch_assemblies = ch_assemblies.mix(TRINITY.out.transcript_fasta)
             }
 
-            if (params.trinity_no_norm) {
+            if (assemblers.contains('trinity_no_norm')) {
                 //
                 // MODULE: TRINITY_NO_NORM
                 //
@@ -157,7 +160,7 @@ workflow DENOVOTRANSCRIPT {
                 ch_assemblies = ch_assemblies.mix(TRINITY_NO_NORM.out.transcript_fasta)
             }
 
-            if (params.rnaspades) {
+            if (assemblers.contains('rnaspades')) {
                 CAT_FASTQ.out.reads.map { meta, illumina ->
                     [ meta, illumina, [], [] ] }.set { ch_spades }
 
@@ -224,8 +227,8 @@ workflow DENOVOTRANSCRIPT {
                 ch_transcripts,
                 params.busco_mode,
                 params.busco_lineage,
-                params.busco_lineages_path,
-                params.busco_config
+                params.busco_lineages_path ?: [],
+                params.busco_config ?: [],
             )
             ch_multiqc_files = ch_multiqc_files.mix(BUSCO_BUSCO.out.short_summaries_txt.collect{it[1]})
             ch_versions = ch_versions.mix(BUSCO_BUSCO.out.versions)
@@ -246,7 +249,7 @@ workflow DENOVOTRANSCRIPT {
                 TRANSRATE (
                     ch_transcripts,
                     CAT_FASTQ.out.reads,
-                    params.transrate_reference
+                    params.transrate_reference ?: []
                 )
                 ch_versions = ch_versions.mix(TRANSRATE.out.versions)
             }

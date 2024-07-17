@@ -54,30 +54,30 @@ An [example samplesheet](../assets/samplesheet.csv) has been provided with the p
 
 An example workflow for RNA-seq data from an experiment can look like this:
 
-1. Run the pipeline with `--QC_only` with default params to check the quality of your reads.
+1. Run the pipeline with `--qc_only` with default params to check the quality of your reads.
 
 ```bash
 nextflow run nf-core/denovotranscript \
   --input samplesheet.csv \
   --outdir <OUTDIR> \
   -profile docker \
-  --QC_only
+  --qc_only
 ```
 
-2. Run the pipeline with `QC_only` and any custom params that you have decided to use based on your data.
+2. Run the pipeline with `qc_only` and any custom params that you have decided to use based on your data.
 
 ```bash
 nextflow run nf-core/denovotranscript \
   --input samplesheet.csv \
   --outdir <OUTDIR> \
   -profile docker \
-  --QC_only \
+  --qc_only \
   --extra_fastp_args='--trim_front1 15 --trim_front2 15' \
   --remove_ribo_rna \
   -resume
 ```
 
-3. Once you are happy with the quality of your reads, run the pipeline without `QC_only` to proceed to transcriptome assembly.
+3. Once you are happy with the quality of your reads, run the pipeline without `qc_only` to proceed to transcriptome assembly.
    If you have a lot of samples, you may wish to only include one replicate per condition in the samplesheet for assembly, as this may be quicker to run. This command also runs transcriptome quality assessment steps and quantification.
 
 ```bash
@@ -118,16 +118,14 @@ rRNA removal is performed, then FastQC is run again on the non-ribo reads.
 
 ## Assembly and redundancy reduction options
 
-You can set any or all of the following parameters to true depending on which
-assemblers/methods/outputs to want to include as inputs to Evidential Gene:
+The `--assemblers` parameter can be used to specify which assemblers to use. By default, the pipeline uses Trinity and rnaSPAdes (`--assemblers "trinity,rnaspades"`).
+The third assembler option you can add is `"trinity_no_norm"` for running Trinity without normalised reads. Extra parameters can be provided to Trinity using the `extra_trinity_args` parameter.
 
-- `--trinity` (default)
-- `--rnaspades` (default, keeps only medium filtered transcripts)
-- `--trinity_no_norm` (to run Trinity without normalised reads)
+For rnaSPAdes, the following additional params can be used:
+
 - `--soft_filtered_transcripts` (to include soft filtered transcripts from rnaSPAdes as inputs to Evidential Gene)
 - `--hard_filtered_transcripts` (to include hard filtered transcripts from rnaSPAdes as inputs to Evidential Gene)
-
-Extra parameters can be provided to Trinity using the `extra_trinity_args` parameter. The `ss` param can be used to set the strand-specific type for rnaSPAdes.
+- `--ss` param can be used to set the strand-specific type for rnaSPAdes.
 
 All assemblies are concatenated into one and redundancy is reduced using
 Evidential Gene's tr2aacds tool. You can provide additional parameters to tr2aacds

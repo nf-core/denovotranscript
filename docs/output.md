@@ -124,7 +124,8 @@ The pipeline pools together pre-processed reads from all samples into one file f
 
 - `trinity/`
   - `*.fa.gz`: de novo assembled transcripts fasta file compressed.
-    This is produced if the `--trinity` and/or `--trinity_no_norm` parameter is used.
+    This is produced if `"trinity"` and/or `"trinity_no_norm"` is included in
+    the `assemblers` param.
   - `pooled_reads.log`: Log file from trinity.
 
 </details>
@@ -138,9 +139,9 @@ The pipeline pools together pre-processed reads from all samples into one file f
 
 - `rnaspades/`
   - `*.assembly.gfa.gz`: Assembly graph in GFA format.
-  - `*.transcripts.fasta`: Transcriptome assembly in FASTA format containing medium filtered transcripts. This is produced if the `--rnaspades` parameter is used (default=True).
-  - `*soft_filtered_transcripts.fa.gz`: Transcriptome assembly in FASTA format containing soft filtered transcripts. This will only be used in the Evidential Gene step if both `--rnaspdes` and `--soft_filtered_transcripts` parameters are true.
-  - `*hard_filtered_transcripts.fa.gz`: Transcriptome assembly in FASTA format containing hard filtered transcripts. These will only be used in the Evidential Gene step if both `--rnaspades` and `--soft_filtered_transcripts` parameters are true.
+  - `*.transcripts.fasta`: Transcriptome assembly in FASTA format containing medium filtered transcripts. This is produced if the `"rnaspades"` assembler is used.
+  - `*soft_filtered_transcripts.fa.gz`: Transcriptome assembly in FASTA format containing soft filtered transcripts. This will only be used in the Evidential Gene step if `"rnaspdes"` assembler is used and the `--soft_filtered_transcripts` parameter is true.
+  - `*hard_filtered_transcripts.fa.gz`: Transcriptome assembly in FASTA format containing hard filtered transcripts. These will only be used in the Evidential Gene step if `"rnaspades"` assembler is used and the `--soft_filtered_transcripts` parameter is true.
   - `*spades.log`: Log file from Spades.
 
 </details>
