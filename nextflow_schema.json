@@ -125,23 +125,14 @@
             "description": "",
             "default": "",
             "properties": {
-                "trinity": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "For creating an assembly with Trinity (with normalized reads)."
-                },
-                "trinity_no_norm": {
-                    "type": "boolean",
-                    "description": "For creating an assembly with Trinity with non-normalized reads."
+                "assemblers": {
+                    "type": "string",
+                    "default": "trinity,rnaspades",
+                    "description": "Assemblers to use. Possible options include \"trinity\", \"trinity_no_norm\" (trinity without normalized reads), and \"rnaspades\"."
                 },
                 "extra_trinity_args": {
                     "type": "string",
                     "description": "Extra arguments to pass to Trinity command in addition to defaults. Applies to both trinity and trinity_no_norm."
-                },
-                "rnaspades": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "For creating an assembly with rnaSPAdes"
                 },
                 "soft_filtered_transcripts": {
                     "type": "boolean",

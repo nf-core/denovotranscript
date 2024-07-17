@@ -21,8 +21,8 @@ if (params.remove_ribo_rna) {
 //
 // LOCAL MODULES
 //
-include { RNAQUAST                        } from '../modules/local/rnaquast/main'
-include { ORP_TRANSRATE as TRANSRATE      } from '../modules/local/orp_transrate/main'
+include { RNAQUAST                    } from '../modules/local/rnaquast/main'
+include { ORP_TRANSRATE as TRANSRATE  } from '../modules/local/orp_transrate/main'
 
 //
 // LOCAL SUBWORKFLOWS
@@ -119,7 +119,7 @@ workflow DENOVOTRANSCRIPT {
         ch_versions = ch_versions.mix(FASTQC_FINAL.out.versions)
     }
 
-    if (!params.QC_only) {
+    if (!params.qc_only) {
 
         if (!params.skip_assembly) {
 
@@ -136,7 +136,9 @@ workflow DENOVOTRANSCRIPT {
 
             ch_assemblies = Channel.empty()
 
-            if (params.trinity) {
+            def assemblers = params.assemblers.tokenize(',')
+
+            if (assemblers.contains('trinity')) {
                 //
                 // MODULE: TRINITY
                 //
@@ -147,7 +149,7 @@ workflow DENOVOTRANSCRIPT {
                 ch_assemblies = ch_assemblies.mix(TRINITY.out.transcript_fasta)
             }
 
-            if (params.trinity_no_norm) {
+            if (assemblers.contains('trinity_no_norm')) {
                 //
                 // MODULE: TRINITY_NO_NORM
                 //
@@ -158,7 +160,7 @@ workflow DENOVOTRANSCRIPT {
                 ch_assemblies = ch_assemblies.mix(TRINITY_NO_NORM.out.transcript_fasta)
             }
 
-            if (params.rnaspades) {
+            if (assemblers.contains('rnaspades')) {
                 CAT_FASTQ.out.reads.map { meta, illumina ->
                     [ meta, illumina, [], [] ] }.set { ch_spades }
 
