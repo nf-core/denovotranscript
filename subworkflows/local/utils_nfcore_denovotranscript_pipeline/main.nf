@@ -156,7 +156,7 @@ workflow PIPELINE_COMPLETION {
 //
 def validateInputParameters() {
 
-    if ( params.QC_only && params.skip_assembly ) {
+    if ( params.qc_only && params.skip_assembly ) {
         error("Incompatible parameters: cannot use --skip_assembly and --QC_only modes together.")
     }
 
@@ -172,10 +172,20 @@ def validateInputParameters() {
         error("Incompatible parameters: Please do not use --no_normalize_reads in --extra_trinity_args. Use --trinity_no_norm instead.")
     }
 
-    if ( (params.soft_filtered_transcripts || params.hard_filtered_transcripts) && !params.rnaspades ) {
-            error("Missing parameter: --rnaspades is required when using --soft_filtered_transcripts or --hard_filtered_transcripts.")
+    if (params.soft_filtered_transcripts || params.hard_filtered_transcripts) {
+        def assemblers = params.assemblers.tokenize(',')
+        if (!assemblers.contains("rnaspades")) {
+            error("Missing parameter: Please include \"rnaspades\" in --assemblers to get --soft_filtered_transcripts or --hard_filtered_transcripts.")
+        }
     }
 
+    if (params.assemblers) {
+        def assemblers = params.assemblers.tokenize(',')
+        def invalid_assemblers = assemblers.findAll { it != "trinity" && it != "trinity_no_norm" && it != "rnaspades" }
+        if (invalid_assemblers) {
+            error("Invalid parameter: --assemblers can only contain \"trinity\", \"trinity_no_norm\", and \"rnaspades\". Found: ${invalid_assemblers.join(', ')}")
+        }
+    }
     genomeExistsError()
 }
 //
