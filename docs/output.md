@@ -1,4 +1,4 @@
-# nf-core/transfuse: Output
+# nf-core/denovotranscript: Output
 
 ## Introduction
 
