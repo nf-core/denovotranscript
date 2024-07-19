@@ -81,7 +81,7 @@ For more details about the output files and reports, please refer to the
 
 ## Credits
 
-nf-core/denovotranscript was written by Avani Bhojwani (@avani-bhojwani) and Timothy Little (@timslittle).
+nf-core/denovotranscript was written by Avani Bhojwani ([@avani-bhojwani](https://github.com/avani-bhojwani/)) and Timothy Little ([@timslittle](https://github.com/timslittle/)).
 
 ## Contributions and Support
 
