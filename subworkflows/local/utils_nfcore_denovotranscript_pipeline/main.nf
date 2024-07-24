@@ -157,7 +157,7 @@ workflow PIPELINE_COMPLETION {
 def validateInputParameters() {
 
     if ( params.qc_only && params.skip_assembly ) {
-        error("Incompatible parameters: cannot use --skip_assembly and --QC_only modes together.")
+        error("Incompatible parameters: cannot use --skip_assembly and --qc_only modes together.")
     }
 
     if ( params.skip_assembly && !params.transcript_fasta ) {

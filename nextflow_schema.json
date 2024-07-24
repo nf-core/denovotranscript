@@ -6,7 +6,7 @@
     "type": "object",
     "definitions": {
         "workflow_options": {
-            "title": "Workflow options",
+            "title": "Partial run options",
             "type": "object",
             "description": "",
             "default": "",
@@ -76,7 +76,7 @@
                 },
                 "save_trimmed_fail": {
                     "type": "boolean",
-                    "description": "Specify true to save files that failed to pass trimming thresholds ending in *.fail.fastq.gz"
+                    "description": "Specify `true` to save files that failed to pass trimming thresholds ending in *.fail.fastq.gz"
                 },
                 "save_merged": {
                     "type": "boolean",
@@ -84,7 +84,7 @@
                 },
                 "skip_fastp": {
                     "type": "boolean",
-                    "description": "Skip the fastp process if true"
+                    "description": "Skip the fastp process if `true`"
                 },
                 "skip_fastqc": {
                     "type": "boolean",
@@ -92,7 +92,7 @@
                 },
                 "extra_fastp_args": {
                     "type": "string",
-                    "description": "Extra arguements for fastp. For example, '--trim_front1 15 --trim_front2 15 --trim_tail1 5 --trim_tail2 5'"
+                    "description": "Extra arguements for fastp. For example, `--trim_front1 15 --trim_front2 15 --trim_tail1 5 --trim_tail2 5{:bash}`"
                 }
             },
             "fa_icon": "fas fa-cut"
@@ -128,7 +128,7 @@
                 "assemblers": {
                     "type": "string",
                     "default": "trinity,rnaspades",
-                    "description": "Assemblers to use. Possible options include \"trinity\", \"trinity_no_norm\" (trinity without normalized reads), and \"rnaspades\"."
+                    "description": "Assemblers to use. Possible options include `trinity`, `trinity_no_norm` (trinity without normalized reads), and `rnaspades`."
                 },
                 "extra_trinity_args": {
                     "type": "string",
@@ -136,11 +136,11 @@
                 },
                 "soft_filtered_transcripts": {
                     "type": "boolean",
-                    "description": "For including hard filtered transcripts (in addition to medium filtered transcripts) from rnaSPAdes in the input to EvidentialGene tr2aacds."
+                    "description": "Include hard filtered transcripts (in addition to medium filtered transcripts) from rnaSPAdes in the input to EvidentialGene tr2aacds."
                 },
                 "hard_filtered_transcripts": {
                     "type": "boolean",
-                    "description": "For including soft filtered transcripts (in addition to the medium filtered transcripts) from rnaSPAdes in the input to EvidentialGene tr2aacds."
+                    "description": "Include soft filtered transcripts (in addition to the medium filtered transcripts) from rnaSPAdes in the input to EvidentialGene tr2aacds."
                 },
                 "ss": {
                     "type": "string",
@@ -168,7 +168,7 @@
                 "busco_lineage": {
                     "type": "string",
                     "default": "auto",
-                    "description": "The BUSCO lineage to use, or \\\"auto\\\" to automatically select lineage\""
+                    "description": "The BUSCO lineage to use, or `auto` to automatically select lineage"
                 },
                 "busco_lineages_path": {
                     "type": "string",
@@ -227,7 +227,7 @@
                 "lib_type": {
                     "type": "string",
                     "default": "A",
-                    "description": "Override library type inferred based on strandedness defined in meta object. 'A' for auto."
+                    "description": "Override library type inferred based on strandedness defined in meta object. `A` for auto."
                 }
             },
             "fa_icon": "fas fa-fish"
