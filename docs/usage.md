@@ -50,7 +50,7 @@ TREATMENT_REP3,AEG588A6_S6_L004_R1_001.fastq.gz,AEG588A6_S6_L004_R2_001.fastq.gz
 
 An [example samplesheet](../assets/samplesheet.csv) has been provided with the pipeline.
 
-## Example workflow
+## Example workflow run
 
 An example workflow for RNA-seq data from an experiment can look like this:
 
@@ -64,9 +64,9 @@ nextflow run nf-core/denovotranscript \
   --qc_only
 ```
 
-2. Run the pipeline with `qc_only` and any custom params that you have decided to use based on your data.
+2. Run the pipeline with `qc_only` and any custom parameters that you have decided to use based on your data. Use `resume` to avoid unnecessarily rerunning unchanged steps
 
-```bash
+```bash {6-8}
 nextflow run nf-core/denovotranscript \
   --input samplesheet.csv \
   --outdir <OUTDIR> \
@@ -80,7 +80,7 @@ nextflow run nf-core/denovotranscript \
 3. Once you are happy with the quality of your reads, run the pipeline without `qc_only` to proceed to transcriptome assembly.
    If you have a lot of samples, you may wish to only include one replicate per condition in the samplesheet for assembly, as this may be quicker to run. This command also runs transcriptome quality assessment steps and quantification.
 
-```bash
+```bash {2,7,8}
 nextflow run nf-core/denovotranscript \
   --input samplesheet_assembly.csv \ # samplesheet with only one replicate per sample
   --outdir <OUTDIR> \
@@ -94,7 +94,7 @@ nextflow run nf-core/denovotranscript \
 
 4. If you created the transcriptome assembly with only one replicate per condition, you can now run the pipeline with the full samplesheet, path to `--transcript_fasta`, and `--skip_assembly` to quantify the expression of all samples. If you used a samplesheet with all samples in step 3, this step is not needed.
 
-```bash
+```bash {2,3,8}
 nextflow run nf-core/denovotranscript \
   --input samplesheet.csv \ # full samplesheet
   --transcript_fasta /path/to/evigene_final_assembly/mrna_fasta_file \

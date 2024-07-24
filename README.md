@@ -40,7 +40,7 @@
 8. Other assembly quality metrics ([`rnaQUAST`](https://github.com/ablab/rnaquast))
 9. Transcriptome quality assessment with [`TransRate`](https://hibberdlab.com/transrate/), including the use of reads for assembly evaluation. This step is not performed if profile is set to `conda` or `mamba`.
 10. Pseudo-alignment and quantification ([`Salmon`](https://combine-lab.github.io/salmon/))
-11. Present HTML report for raw reads, trimmed reads, BUSCO, and Salmon ([`MultiQC`](http://multiqc.info/))
+11. HTML report for raw reads, trimmed reads, BUSCO, and Salmon ([`MultiQC`](http://multiqc.info/))
 
 ## Usage
 
