@@ -88,7 +88,7 @@
                 },
                 "skip_fastqc": {
                     "type": "boolean",
-                    "description": "Skip FastQC processes if true"
+                    "description": "Skip FastQC processes if `true`"
                 },
                 "extra_fastp_args": {
                     "type": "string",
@@ -163,7 +163,8 @@
                 "busco_mode": {
                     "type": "string",
                     "default": "transcriptome",
-                    "description": "The mode to run BUSCO in. One of genome, proteins, or transcriptome"
+                    "description": "The mode to run BUSCO in. One of genome, proteins, or transcriptome",
+                    "enum": ["genome", "proteins", "transcriptome"]
                 },
                 "busco_lineage": {
                     "type": "string",
