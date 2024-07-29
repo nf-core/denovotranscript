@@ -128,7 +128,8 @@
                 "assemblers": {
                     "type": "string",
                     "default": "trinity,rnaspades",
-                    "description": "Assemblers to use. Possible options include `trinity`, `trinity_no_norm` (trinity without normalized reads), and `rnaspades`."
+                    "description": "Assemblers to use. Possible options include `trinity`, `trinity_no_norm` (trinity without normalized reads), and `rnaspades`.",
+                    "pattern": "^(trinity|trinity_no_norm|rnaspades)(,(trinity|trinity_no_norm|rnaspades))*$"
                 },
                 "extra_trinity_args": {
                     "type": "string",
