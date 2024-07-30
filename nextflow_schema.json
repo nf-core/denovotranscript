@@ -88,7 +88,7 @@
                 },
                 "skip_fastqc": {
                     "type": "boolean",
-                    "description": "Skip FastQC processes if true"
+                    "description": "Skip FastQC processes if `true`"
                 },
                 "extra_fastp_args": {
                     "type": "string",
@@ -128,7 +128,8 @@
                 "assemblers": {
                     "type": "string",
                     "default": "trinity,rnaspades",
-                    "description": "Assemblers to use. Possible options include `trinity`, `trinity_no_norm` (trinity without normalized reads), and `rnaspades`."
+                    "description": "Assemblers to use. Possible options include `trinity`, `trinity_no_norm` (trinity without normalized reads), and `rnaspades`.",
+                    "pattern": "^(trinity|trinity_no_norm|rnaspades)(,(trinity|trinity_no_norm|rnaspades))*$"
                 },
                 "extra_trinity_args": {
                     "type": "string",
@@ -163,7 +164,8 @@
                 "busco_mode": {
                     "type": "string",
                     "default": "transcriptome",
-                    "description": "The mode to run BUSCO in. One of genome, proteins, or transcriptome"
+                    "description": "The mode to run BUSCO in. One of genome, proteins, or transcriptome",
+                    "enum": ["genome", "proteins", "transcriptome"]
                 },
                 "busco_lineage": {
                     "type": "string",

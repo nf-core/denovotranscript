@@ -13,23 +13,66 @@ report_section_order:
 module_order:
   - fastqc:
       name: "FastQC raw"
+      anchor: "fastqc_raw"
       info: "This section of the report shows FastQC results of the raw reads."
       path_filters:
         - "*/*_raw_*.zip"
   - fastqc:
       name: "FastQC after trimming"
+      anchor: "fastqc_trim"
       info: "This section of the report shows FastQC results after trimming with
         fastp."
       path_filters:
         - "*/*_trim_*.zip"
+  - sortmerna
   - fastqc:
       name: "FastQC after filtering"
+      anchor: "fastqc_final"
       info: "This section of the report shows FastQC results after trimming with
         fastp (if used) and filtering with SortMeRNA."
       path_filters:
         - "*/*_final_*.zip"
   - busco
   - salmon
+
+use_filename_as_sample_name:
+  - sortmerna
+
+extra_fn_clean_exts:
+  - type: remove
+    pattern: _raw
+  - type: remove
+    pattern: _trim
+  - type: remove
+    pattern: _final
+  - type: remove
+    pattern: .sortmerna
+  - type: regex_keep
+    pattern: all_assembled.okay.mrna
+    module: busco
+
+table_columns_name:
+  FastQC raw:
+    percent_duplicates: "% Dups (Raw)"
+    percent_gc: "% GC (Raw)"
+    avg_sequence_length: "Avg Read Length (Raw)"
+    median_sequence_length: "Median Read Length (Raw)"
+    percent_fails: "% Failed (Raw)"
+    total_sequences: "M Seqs (Raw)"
+  FastQC after trimming:
+    percent_duplicates: "% Dups (Trim)"
+    percent_gc: "% GC (Trim)"
+    avg_sequence_length: "Avg Read Length (Trim)"
+    median_sequence_length: "Median Read Length (Trim)"
+    percent_fails: "% Failed (Trim)"
+    total_sequences: "M Seqs (Trim)"
+  FastQC after filtering:
+    percent_duplicates: "% Dups (Final)"
+    percent_gc: "% GC (Final)"
+    avg_sequence_length: "Avg Read Length (Final)"
+    median_sequence_length: "Median Read Length (Final)"
+    percent_fails: "% Failed (Final)"
+    total_sequences: "M Seqs (Final)"
 
 export_plots: true
 
