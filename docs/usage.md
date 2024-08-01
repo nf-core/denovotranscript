@@ -4,6 +4,8 @@
 
 > _Documentation of pipeline parameters is generated automatically from the pipeline schema and can no longer be found in markdown files._
 
+Please see the [example workflow run](usage/example_workflow.md) page for examples of commands for processing RNA-seq data from an experiment.
+
 ## Introduction
 
 ## Samplesheet input
