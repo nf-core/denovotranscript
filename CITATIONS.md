@@ -10,13 +10,49 @@
 
 ## Pipeline tools
 
+- [BUSCO](https://busco.ezlab.org/)
+
+  > Manni M, Berkeley MR, Seppey M, Simão FA, Zdobnov EM. BUSCO Update: Novel and Streamlined Workflows along with Broader and Deeper Phylogenetic Coverage for Scoring of Eukaryotic, Prokaryotic, and Viral Genomes. Mol Biol Evol. 2021 Sep 27;38(10):4647-4654. doi: 10.1093/molbev/msab199. PMID: 34320186; PMCID: PMC8476166.
+
+- [Evidential Gene](http://arthropods.eugenes.org/EvidentialGene/)
+
+  > Gilbert, D. G. (2019). Longest protein, longest transcript or most expression, for accurate gene reconstruction of transcriptomes? bioRxiv. https://doi.org/10.1101/829184
+
+- [fastp](https://github.com/OpenGene/fastp)
+
+  > Chen S. Ultrafast one-pass FASTQ data preprocessing, quality control, and deduplication using fastp. Imeta. 2023 May 8;2(2):e107. doi: 10.1002/imt2.107. PMID: 38868435; PMCID: PMC10989850.
+
 - [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
 
-  > Andrews, S. (2010). FastQC: A Quality Control Tool for High Throughput Sequence Data [Online].
+- [gawk](https://www.gnu.org/software/gawk/)
 
 - [MultiQC](https://pubmed.ncbi.nlm.nih.gov/27312411/)
 
   > Ewels P, Magnusson M, Lundin S, Käller M. MultiQC: summarize analysis results for multiple tools and samples in a single report. Bioinformatics. 2016 Oct 1;32(19):3047-8. doi: 10.1093/bioinformatics/btw354. Epub 2016 Jun 16. PubMed PMID: 27312411; PubMed Central PMCID: PMC5039924.
+
+- [rnaQUAST](https://github.com/ablab/rnaquast)
+
+  > Bushmanova E, Antipov D, Lapidus A, Suvorov V, Prjibelski AD. rnaQUAST: a quality assessment tool for de novo transcriptome assemblies. Bioinformatics. 2016 Jul 15;32(14):2210-2. doi: 10.1093/bioinformatics/btw218. Epub 2016 Apr 23. PMID: 27153654.
+
+- [rnaSPAdes](https://ablab.github.io/spades/rna.html)
+
+  > Prjibelski A, Antipov D, Meleshko D, Lapidus A, Korobeynikov A. Using SPAdes De Novo Assembler. Curr Protoc Bioinformatics. 2020 Jun;70(1):e102. doi: 10.1002/cpbi.102. PMID: 32559359.
+
+- [Salmon](https://salmon.readthedocs.io/en/latest/salmon.html)
+
+  > Patro R, Duggal G, Love MI, Irizarry RA, Kingsford C. Salmon provides fast and bias-aware quantification of transcript expression. Nat Methods. 2017 Apr;14(4):417-419. doi: 10.1038/nmeth.4197. Epub 2017 Mar 6. PMID: 28263959; PMCID: PMC5600148.
+
+- [SortMeRNA](https://github.com/sortmerna/sortmerna)
+
+  > Kopylova E, Noé L, Touzet H. SortMeRNA: fast and accurate filtering of ribosomal RNAs in metatranscriptomic data. Bioinformatics. 2012 Dec 15;28(24):3211-7. doi: 10.1093/bioinformatics/bts611. Epub 2012 Oct 15. PMID: 23071270.
+
+- [TransRate](https://hibberdlab.com/transrate/)
+
+  > Smith-Unna R, Boursnell C, Patro R, Hibberd JM, Kelly S. TransRate: reference-free quality assessment of de novo transcriptome assemblies. Genome Res. 2016 Aug;26(8):1134-44. doi: 10.1101/gr.196469.115. Epub 2016 Jun 1. PMID: 27252236; PMCID: PMC4971766.
+
+- [Trinity](https://github.com/trinityrnaseq/trinityrnaseq/wiki)
+
+  > Haas BJ, Papanicolaou A, Yassour M, Grabherr M, Blood PD, Bowden J, Couger MB, Eccles D, Li B, Lieber M, MacManes MD, Ott M, Orvis J, Pochet N, Strozzi F, Weeks N, Westerman R, William T, Dewey CN, Henschel R, LeDuc RD, Friedman N, Regev A. De novo transcript sequence reconstruction from RNA-seq using the Trinity platform for reference generation and analysis. Nat Protoc. 2013 Aug;8(8):1494-512. doi: 10.1038/nprot.2013.084. Epub 2013 Jul 11. PMID: 23845962; PMCID: PMC3875132.
 
 ## Software packaging/containerisation tools
 
