@@ -39,8 +39,7 @@ include { validateInputSamplesheet    } from '../subworkflows/local/utils_nfcore
 //
 // NF-CORE MODULES/PLUGINS
 //
-include { fromSamplesheet             } from 'plugin/nf-validation'
-include { paramsSummaryMap            } from 'plugin/nf-validation'
+include { paramsSummaryMap            } from 'plugin/nf-schema'
 
 include { BUSCO_BUSCO                 } from '../modules/nf-core/busco/busco/main'
 include { CAT_CAT                     } from '../modules/nf-core/cat/cat/main'
