@@ -1,7 +1,15 @@
 Changes in module 'nf-core/trinity'
+Changes in 'trinity/main.nf':
 --- modules/nf-core/trinity/main.nf
 +++ modules/nf-core/trinity/main.nf
-@@ -9,7 +9,7 @@
+@@ -1,6 +1,5 @@
+ process TRINITY {
+     tag "$meta.id"
+-    label 'process_high'
+     label 'process_high_memory'
+ 
+     conda "${moduleDir}/environment.yml"
+@@ -9,7 +8,7 @@
          'biocontainers/trinity:2.15.1--pl5321h146fbdb_3' }"
  
      input:
@@ -11,4 +19,10 @@ Changes in module 'nf-core/trinity'
      output:
      tuple val(meta), path("*.fa.gz")    , emit: transcript_fasta
 
+'modules/nf-core/trinity/environment.yml' is unchanged
+'modules/nf-core/trinity/meta.yml' is unchanged
+'modules/nf-core/trinity/tests/tags.yml' is unchanged
+'modules/nf-core/trinity/tests/main.nf.test.snap' is unchanged
+'modules/nf-core/trinity/tests/nextflow.config' is unchanged
+'modules/nf-core/trinity/tests/main.nf.test' is unchanged
 ************************************************************
