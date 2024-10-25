@@ -8,99 +8,71 @@
                     "busco/busco": {
                         "branch": "master",
                         "git_sha": "17486961b8b1ab1aae258c83a7e947b40d8ab670",
-                        "installed_by": [
-                            "modules"
-                        ]
+                        "installed_by": ["modules"]
                     },
                     "cat/cat": {
                         "branch": "master",
                         "git_sha": "9437e6053dccf4aafa022bfd6e7e9de67e625af8",
-                        "installed_by": [
-                            "modules"
-                        ]
+                        "installed_by": ["modules"]
                     },
                     "cat/fastq": {
                         "branch": "master",
                         "git_sha": "4fc983ad0b30e6e32696fa7d980c76c7bfe1c03e",
-                        "installed_by": [
-                            "modules"
-                        ]
+                        "installed_by": ["modules"]
                     },
                     "evigene/tr2aacds": {
                         "branch": "master",
                         "git_sha": "95d52841a6e2c6cd789dfd7248ac12a0fe4b5501",
-                        "installed_by": [
-                            "modules"
-                        ]
+                        "installed_by": ["modules"]
                     },
                     "fastp": {
                         "branch": "master",
                         "git_sha": "95cf5fe0194c7bf5cb0e3027a2eb7e7c89385080",
-                        "installed_by": [
-                            "fastq_trim_fastp_fastqc",
-                            "modules"
-                        ]
+                        "installed_by": ["fastq_trim_fastp_fastqc", "modules"]
                     },
                     "fastqc": {
                         "branch": "master",
                         "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
-                        "installed_by": [
-                            "fastq_trim_fastp_fastqc",
-                            "modules"
-                        ]
+                        "installed_by": ["fastq_trim_fastp_fastqc", "modules"]
                     },
                     "gawk": {
                         "branch": "master",
                         "git_sha": "cf3ed075695639b0a0924eb0901146df1996dc08",
-                        "installed_by": [
-                            "modules"
-                        ]
+                        "installed_by": ["modules"]
                     },
                     "multiqc": {
                         "branch": "master",
                         "git_sha": "cf17ca47590cc578dfb47db1c2a44ef86f89976d",
-                        "installed_by": [
-                            "modules"
-                        ]
+                        "installed_by": ["modules"]
                     },
                     "salmon/index": {
                         "branch": "master",
                         "git_sha": "cb6b2b94fc40dea58f0b1e3dd095f3dd24f2ac8a",
-                        "installed_by": [
-                            "modules"
-                        ],
+                        "installed_by": ["modules"],
                         "patch": "modules/nf-core/salmon/index/salmon-index.diff"
                     },
                     "salmon/quant": {
                         "branch": "master",
                         "git_sha": "727232afb8294b53dd9d05bfe469b70cce1675bb",
-                        "installed_by": [
-                            "modules"
-                        ],
+                        "installed_by": ["modules"],
                         "patch": "modules/nf-core/salmon/quant/salmon-quant.diff"
                     },
                     "sortmerna": {
                         "branch": "master",
                         "git_sha": "ad22467dff16284093e7335d5e77964e9bbc510b",
-                        "installed_by": [
-                            "modules"
-                        ],
+                        "installed_by": ["modules"],
                         "patch": "modules/nf-core/sortmerna/sortmerna.diff"
                     },
                     "spades": {
                         "branch": "master",
                         "git_sha": "b3f04d8392f4571d5869eb3a345892dd2cbea225",
-                        "installed_by": [
-                            "modules"
-                        ],
+                        "installed_by": ["modules"],
                         "patch": "modules/nf-core/spades/spades.diff"
                     },
                     "trinity": {
                         "branch": "master",
                         "git_sha": "e06c5f45395d6e34531257b125d410a298a3bd4f",
-                        "installed_by": [
-                            "modules"
-                        ],
+                        "installed_by": ["modules"],
                         "patch": "modules/nf-core/trinity/trinity.diff"
                     }
                 }
@@ -110,30 +82,22 @@
                     "fastq_trim_fastp_fastqc": {
                         "branch": "master",
                         "git_sha": "cfd937a668919d948f6fcbf4218e79de50c2f36f",
-                        "installed_by": [
-                            "subworkflows"
-                        ]
+                        "installed_by": ["subworkflows"]
                     },
                     "utils_nextflow_pipeline": {
                         "branch": "master",
                         "git_sha": "3aa0aec1d52d492fe241919f0c6100ebf0074082",
-                        "installed_by": [
-                            "subworkflows"
-                        ]
+                        "installed_by": ["subworkflows"]
                     },
                     "utils_nfcore_pipeline": {
                         "branch": "master",
                         "git_sha": "1b6b9a3338d011367137808b49b923515080e3ba",
-                        "installed_by": [
-                            "subworkflows"
-                        ]
+                        "installed_by": ["subworkflows"]
                     },
                     "utils_nfschema_plugin": {
                         "branch": "master",
                         "git_sha": "bbd5a41f4535a8defafe6080e00ea74c45f4f96c",
-                        "installed_by": [
-                            "subworkflows"
-                        ]
+                        "installed_by": ["subworkflows"]
                     }
                 }
             }
