@@ -7,9 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Enhancements & fixes:
 
-* [PR #14](https://github.com/nf-core/denovotranscript/pull/14) - Template update for nf-core/tools v3.0.2
-* [PR #15](https://github.com/nf-core/denovotranscript/pull/16) - Fix logic for skip_assembly parameter
-* [PR #16](https://github.com/nf-core/denovotranscript/pull/16) - Increase resources for Trinity
+- [PR #14](https://github.com/nf-core/denovotranscript/pull/14) - Template update for nf-core/tools v3.0.2
+- [PR #15](https://github.com/nf-core/denovotranscript/pull/16) - Fix logic for skip_assembly parameter
+- [PR #16](https://github.com/nf-core/denovotranscript/pull/16) - Increase resources for Trinity
 
 ## v1.0.0 - [2024-08-15]
 
