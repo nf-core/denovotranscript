@@ -253,7 +253,7 @@ workflow DENOVOTRANSCRIPT {
         }
 
         if (params.skip_assembly) {
-            ch_transcripts_fa = Channel.fromPath(params.transcript_fasta, checkIfExists: true)
+            ch_transcripts_fa = params.transcript_fasta
         } else {
             ch_transcripts_fa = ch_transcripts.collect { meta, fasta -> fasta }
         }
