@@ -10,7 +10,7 @@ Enhancements & fixes:
 - [PR #14](https://github.com/nf-core/denovotranscript/pull/14) - Template update for nf-core/tools v3.0.2
 - [PR #15](https://github.com/nf-core/denovotranscript/pull/15) - Fix logic for skip_assembly parameter
 - [PR #16](https://github.com/nf-core/denovotranscript/pull/16) - Increase resources for Trinity
-- [PR #19](https://github.com/nf-core/denovotranscript/pull/19) - Fix Salmon quantification when running in skip_assembly mode
+- [PR #19](https://github.com/nf-core/denovotranscript/pull/21) - Fix Salmon quantification when running in skip_assembly mode
 
 ## v1.0.0 - [2024-08-15]
 
