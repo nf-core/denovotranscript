@@ -71,9 +71,8 @@
                     },
                     "trinity": {
                         "branch": "master",
-                        "git_sha": "e06c5f45395d6e34531257b125d410a298a3bd4f",
-                        "installed_by": ["modules"],
-                        "patch": "modules/nf-core/trinity/trinity.diff"
+                        "git_sha": "05a2da2a077047c9d637bb71626c65b7e4fc04c3",
+                        "installed_by": ["modules"]
                     }
                 }
             },
