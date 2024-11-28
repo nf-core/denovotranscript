@@ -72,7 +72,7 @@
                     "trinity": {
                         "branch": "master",
                         "git_sha": "05a2da2a077047c9d637bb71626c65b7e4fc04c3",
-                        "installed_by": ["modules"],
+                        "installed_by": ["modules"]
                     }
                 }
             },
