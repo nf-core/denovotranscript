@@ -11,7 +11,7 @@ Enhancements & fixes:
 - [PR #15](https://github.com/nf-core/denovotranscript/pull/15) - Fix logic for skip_assembly parameter
 - [PR #16](https://github.com/nf-core/denovotranscript/pull/16) - Increase resources for Trinity
 - [PR #19](https://github.com/nf-core/denovotranscript/pull/21) - Fix Salmon quantification when running in skip_assembly mode
-- [PR #24](https://github.com/nf-core/denovotranscript/pull/21) - Update Trinity module
+- [PR #24](https://github.com/nf-core/denovotranscript/pull/21) - Update Trinity module and fix dependency issue
 
 ### Software dependencies
 
