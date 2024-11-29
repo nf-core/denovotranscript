@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v1.2.0dev - [2024-11-29]
+
+- [PR #25](https://github.com/nf-core/denovotranscript/pull/25) - Bump version to 1.2.0dev
+
 ## v1.1.0 - [2024-11-28]
 
 Enhancements & fixes:
@@ -11,7 +15,7 @@ Enhancements & fixes:
 - [PR #15](https://github.com/nf-core/denovotranscript/pull/15) - Fix logic for skip_assembly parameter
 - [PR #16](https://github.com/nf-core/denovotranscript/pull/16) - Increase resources for Trinity
 - [PR #19](https://github.com/nf-core/denovotranscript/pull/21) - Fix Salmon quantification when running in skip_assembly mode
-- [PR #24](https://github.com/nf-core/denovotranscript/pull/21) - Update Trinity module and fix dependency issue
+- [PR #24](https://github.com/nf-core/denovotranscript/pull/24) - Update Trinity module and fix dependency issue
 
 ### Software dependencies
 
