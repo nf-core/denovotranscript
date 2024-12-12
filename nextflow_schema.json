@@ -145,8 +145,9 @@
                 },
                 "ss": {
                     "type": "string",
-                    "description": "Set strand-specific type for rnaSPAdes. Use `--ss rf` when first read in pair corresponds to reverse gene strand (antisense data, e.g. obtained via dUTP protocol) and `--ss fr` otherwise (forward).",
-                    "help_text": "Note, that strand-specificity is not related and should not be confused with FR and RF orientation of paired reads. RNA-Seq paired-end reads typically have forward-reverse orientation (--> <--), which is assumed by default and no additional options are needed."
+                    "description": "Set strand-specific type for rnaSPAdes. Use `rf` when first read in pair corresponds to reverse gene strand (antisense data, e.g. obtained via dUTP protocol) and `fr` otherwise (forward).",
+                    "help_text": "Note, that strand-specificity is not related and should not be confused with FR and RF orientation of paired reads. RNA-Seq paired-end reads typically have forward-reverse orientation (--> <--), which is assumed by default and no additional options are needed.",
+                    "enum": ["rf", "fr"]
                 },
                 "extra_tr2aacds_args": {
                     "type": "string",
