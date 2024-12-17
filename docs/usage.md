@@ -4,9 +4,9 @@
 
 > _Documentation of pipeline parameters is generated automatically from the pipeline schema and can no longer be found in markdown files._
 
-## Introduction
+Please see the [example workflow run](usage/example_workflow.md) page for examples of commands for processing RNA-seq data from an experiment.
 
-<!-- TODO nf-core: Add documentation about anything specific to running your pipeline. For general topics, please point to (and add to) the main nf-core website. -->
+## Introduction
 
 ## Samplesheet input
 
@@ -31,17 +31,17 @@ CONTROL_REP1,AEG588A1_S1_L004_R1_001.fastq.gz,AEG588A1_S1_L004_R2_001.fastq.gz
 
 The pipeline will auto-detect whether a sample is single- or paired-end using the information provided in the samplesheet. The samplesheet can have as many columns as you desire, however, there is a strict requirement for the first 3 columns to match those defined in the table below.
 
-A final samplesheet file consisting of both single- and paired-end data may look something like the one below. This is for 6 samples, where `TREATMENT_REP3` has been sequenced twice.
+This pipeline is suitable for paired-end reads only. A final samplesheet file may look something like the one below. This is for 6 samples, where `TREATMENT_REP3` has been sequenced twice.
 
 ```csv title="samplesheet.csv"
 sample,fastq_1,fastq_2
 CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
 CONTROL_REP2,AEG588A2_S2_L002_R1_001.fastq.gz,AEG588A2_S2_L002_R2_001.fastq.gz
 CONTROL_REP3,AEG588A3_S3_L002_R1_001.fastq.gz,AEG588A3_S3_L002_R2_001.fastq.gz
-TREATMENT_REP1,AEG588A4_S4_L003_R1_001.fastq.gz,
-TREATMENT_REP2,AEG588A5_S5_L003_R1_001.fastq.gz,
-TREATMENT_REP3,AEG588A6_S6_L003_R1_001.fastq.gz,
-TREATMENT_REP3,AEG588A6_S6_L004_R1_001.fastq.gz,
+TREATMENT_REP1,AEG588A4_S4_L003_R1_001.fastq.gz,AEG588A4_S4_L003_R2_001.fastq.gz
+TREATMENT_REP2,AEG588A5_S5_L003_R1_001.fastq.gz,AEG588A5_S5_L003_R2_001.fastq.gz
+TREATMENT_REP3,AEG588A6_S6_L003_R1_001.fastq.gz,AEG588A6_S6_L003_R2_001.fastq.gz
+TREATMENT_REP3,AEG588A6_S6_L004_R1_001.fastq.gz,AEG588A6_S6_L004_R2_001.fastq.gz
 ```
 
 | Column    | Description                                                                                                                                                                            |
@@ -52,12 +52,49 @@ TREATMENT_REP3,AEG588A6_S6_L004_R1_001.fastq.gz,
 
 An [example samplesheet](../assets/samplesheet.csv) has been provided with the pipeline.
 
+## Quality Control options
+
+By default, this pipeline checks the quality of the raw reads using FastQC, then performs trimming with fastp. Quality of the trimmed reads is checked again with
+FastQC. You can provide extra arguments to fastp using the `--extra_fastp_args` parameter. You can provide fasta files of adapter sequences to be used for trimming with the `--adapter_fasta` parameter.
+
+Alternatively, you can skip these steps with `--skip_qc` and `--skip_fastp` parameters.
+
+There is also an optional step to remove rRNA reads using SortMeRNA after trimming using the `--remove_ribo_rna` parameter. You can provide a custom ribosomal RNA database with the `--ribo_database_manifest` parameter. By default, the pipeline uses the databases mentioned in `assets/rrna-db-defaults.txt`. You can also save the non-ribo reads with the `--save_non_ribo_reads` parameter. If
+rRNA removal is performed, then FastQC is run again on the non-ribo reads.
+
+## Assembly and redundancy reduction options
+
+The `--assemblers` parameter can be used to specify which assemblers to use. By default, the pipeline uses Trinity and rnaSPAdes (`--assemblers "trinity,rnaspades"`).
+The third assembler option you can add is `"trinity_no_norm"` for running Trinity without normalised reads. Extra parameters can be provided to Trinity using the `extra_trinity_args` parameter.
+
+For rnaSPAdes, the following additional params can be used:
+
+- `--soft_filtered_transcripts` (to include soft filtered transcripts from rnaSPAdes as inputs to Evidential Gene)
+- `--hard_filtered_transcripts` (to include hard filtered transcripts from rnaSPAdes as inputs to Evidential Gene)
+- `--ss` param can be used to set the strand-specific type for rnaSPAdes.
+
+All assemblies are concatenated into one and redundancy is reduced using
+Evidential Gene's tr2aacds tool. You can provide additional parameters to tr2aacds
+using the `extra_tr2aacds_args` parameter.
+
+## Assembly quality assessment
+
+The pipeline runs BUSCO on the final assembly to assess the quality of the assembly. You can provide the lineage to use with the `--busco_lineage` parameter. Other parameters available for BUSCO include `busco_lineages_path` and `busco_config`.
+
+rnaQUAST is also run on the final assembly. Optional parameters for rnaQUAST include `fasta` for a fasta file of a reference genome and `gtf` for a GTF/GFF file of gene coordinates.
+
+TransRate can be used for assembly quality assessment if the profile is not set to `conda` or `mamba`. It provides contig metrics as well as read mapping metrics. Optionally, the `transrate_reference` parameter can be used to provide a FASTA file of reference proteins or transcripts from a related species.
+
+## Quantification options
+
+You can provide the path to the transcriptome assembly fasta file with the `--transcript_fasta` parameter if you are running the pipeline in `--skip_assembly` mode. The `--skip_assembly` mode performs QC and quantification, but does not create a transcriptome assembly. The pipeline uses Salmon to quantify the expression of the reads. By default the library type is set to `A`, but you can change this with the `--lib_type` parameter.
+
 ## Running the pipeline
 
 The typical command for running the pipeline is as follows:
 
 ```bash
-nextflow run nf-core/denovotranscript --input ./samplesheet.csv --outdir ./results --genome GRCh37 -profile docker
+nextflow run nf-core/denovotranscript --input ./samplesheet.csv --outdir ./results -profile docker
 ```
 
 This will launch the pipeline with the `docker` configuration profile. See below for more information about profiles.
@@ -89,7 +126,6 @@ with:
 ```yaml title="params.yaml"
 input: './samplesheet.csv'
 outdir: './results/'
-genome: 'GRCh37'
 <...>
 ```
 
@@ -128,7 +164,7 @@ Use this parameter to choose a configuration profile. Profiles can give configur
 Several generic profiles are bundled with the pipeline which instruct the pipeline to use software packaged using different methods (Docker, Singularity, Podman, Shifter, Charliecloud, Apptainer, Conda) - see below.
 
 > [!IMPORTANT]
-> We highly recommend the use of Docker or Singularity containers for full pipeline reproducibility, however when this is not possible, Conda is also supported.
+> We highly recommend the use of Docker or Singularity containers for full pipeline reproducibility. However, when this is not possible, Conda is partially supported. Note that Conda is not supported for Transrate in this pipeline.
 
 The pipeline also dynamically loads configurations from [https://github.com/nf-core/configs](https://github.com/nf-core/configs) when it runs, making multiple config profiles for various institutional clusters available at run time. For more information and to check if your system is suported, please see the [nf-core/configs documentation](https://github.com/nf-core/configs#documentation).
 
