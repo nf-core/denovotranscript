@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [PR #25](https://github.com/nf-core/denovotranscript/pull/25) - Bump version to 1.2.0dev
 - [PR #27](https://github.com/nf-core/denovotranscript/pull/27) - Update spades resources and usage instructions
+- [PR #28](https://github.com/nf-core/denovotranscript/pull/28) - Template update for nf-core/tools v3.1.0
 
 ## v1.1.0 - [2024-11-28]
 
