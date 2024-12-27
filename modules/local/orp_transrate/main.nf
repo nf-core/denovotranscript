@@ -34,6 +34,11 @@ process ORP_TRANSRATE {
     gunzip -c ${reads[0]} > ${prefix}_1.fq
     gunzip -c ${reads[1]} > ${prefix}_2.fq
 
+    mkdir ./tmp
+    export TMPDIR=./tmp
+    export TEMP=./tmp
+    export TMP=./tmp
+
     transrate \\
         --assembly $fasta \\
         --left ${prefix}_1.fq \\
