@@ -5,6 +5,23 @@
     "description": "A pipeline for de novo transcriptome assembly of short reads from bulk RNA-seq",
     "type": "object",
     "$defs": {
+        "workflow_options": {
+            "title": "Partial run options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "qc_only": {
+                    "type": "boolean",
+                    "description": "Whether the pipeline should only perform quality control, and skip assembly and quantification."
+                },
+                "skip_assembly": {
+                    "type": "boolean",
+                    "description": "Whether the pipeline should skip assembly steps, and only perform quality control of reads and quantification. --transcript_fasta must be provided if True."
+                }
+            },
+            "fa_icon": "fas fa-angle-double-right"
+        },
         "input_output_options": {
             "title": "Input/output options",
             "type": "object",
@@ -29,6 +46,10 @@
                     "description": "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure.",
                     "fa_icon": "fas fa-folder-open"
                 },
+                "transcript_fasta": {
+                    "type": "string",
+                    "description": "Path to fasta file (not compressed) containing a transcriptome assembly. Only needed if `--skip_assembly` is `True`."
+                },
                 "email": {
                     "type": "string",
                     "description": "Email address for completion summary.",
@@ -43,18 +64,133 @@
                 }
             }
         },
-        "reference_genome_options": {
-            "title": "Reference genome options",
+        "fastqc_fastp_options": {
+            "title": "FastQC/fastp options",
             "type": "object",
-            "fa_icon": "fas fa-dna",
-            "description": "Reference genome related files and options required for the workflow.",
+            "description": "",
+            "default": "",
             "properties": {
-                "genome": {
+                "adapter_fasta": {
                     "type": "string",
-                    "description": "Name of iGenomes reference.",
-                    "fa_icon": "fas fa-book",
-                    "help_text": "If using a reference genome configured in the pipeline using iGenomes, use this parameter to give the ID for the reference. This is then used to build the full paths for all required reference genome files e.g. `--genome GRCh38`. \n\nSee the [nf-core website docs](https://nf-co.re/usage/reference_genomes) for more details."
+                    "description": "File in FASTA format containing possible adapters to remove. Accepted formats: *.{fasta,fna,fas,fa}"
                 },
+                "save_trimmed_fail": {
+                    "type": "boolean",
+                    "description": "Specify `true` to save files that failed to pass trimming thresholds ending in *.fail.fastq.gz"
+                },
+                "save_merged": {
+                    "type": "boolean",
+                    "description": "Specify true to save all merged reads to the a file ending in *.merged.fastq.gz"
+                },
+                "skip_fastp": {
+                    "type": "boolean",
+                    "description": "Skip the fastp process if `true`"
+                },
+                "skip_fastqc": {
+                    "type": "boolean",
+                    "description": "Skip FastQC processes if `true`"
+                },
+                "extra_fastp_args": {
+                    "type": "string",
+                    "description": "Extra arguements for fastp. For example, `--trim_front1 15 --trim_front2 15 --trim_tail1 5 --trim_tail2 5{:bash}`"
+                }
+            },
+            "fa_icon": "fas fa-cut"
+        },
+        "sortmerna_options": {
+            "title": "SortMeRNA options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "remove_ribo_rna": {
+                    "type": "boolean",
+                    "description": "Enable the removal of reads derived from ribosomal RNA using SortMeRNA."
+                },
+                "ribo_database_manifest": {
+                    "type": "string",
+                    "default": "${projectDir}/assets/rrna-db-defaults.txt",
+                    "description": "Text file containing paths to fasta files (one per line) that will be used to create the database for SortMeRNA."
+                },
+                "save_non_ribo_reads": {
+                    "type": "boolean",
+                    "description": "If this option is specified, intermediate FastQ files containing non-rRNA reads will be saved in the results directory."
+                }
+            },
+            "fa_icon": "fas fa-filter"
+        },
+        "assembly_options": {
+            "title": "Assembly options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "assemblers": {
+                    "type": "string",
+                    "default": "trinity,rnaspades",
+                    "description": "Assemblers to use. Possible options include `trinity`, `trinity_no_norm` (trinity without normalized reads), and `rnaspades`.",
+                    "pattern": "^(trinity|trinity_no_norm|rnaspades)(,(trinity|trinity_no_norm|rnaspades))*$"
+                },
+                "extra_trinity_args": {
+                    "type": "string",
+                    "description": "Extra arguments to pass to Trinity command in addition to defaults. Applies to both trinity and trinity_no_norm."
+                },
+                "soft_filtered_transcripts": {
+                    "type": "boolean",
+                    "description": "Include hard filtered transcripts (in addition to medium filtered transcripts) from rnaSPAdes in the input to EvidentialGene tr2aacds."
+                },
+                "hard_filtered_transcripts": {
+                    "type": "boolean",
+                    "description": "Include soft filtered transcripts (in addition to the medium filtered transcripts) from rnaSPAdes in the input to EvidentialGene tr2aacds."
+                },
+                "ss": {
+                    "type": "string",
+                    "description": "Set strand-specific type for rnaSPAdes. Use `rf` when first read in pair corresponds to reverse gene strand (antisense data, e.g. obtained via dUTP protocol) and `fr` otherwise (forward).",
+                    "help_text": "Note, that strand-specificity is not related and should not be confused with FR and RF orientation of paired reads. RNA-Seq paired-end reads typically have forward-reverse orientation (--> <--), which is assumed by default and no additional options are needed.",
+                    "enum": ["rf", "fr"]
+                },
+                "extra_tr2aacds_args": {
+                    "type": "string",
+                    "description": "Extra arguments for tr2aacds.pl. For example, '-MINAA=20'"
+                }
+            },
+            "fa_icon": "fas fa-puzzle-piece"
+        },
+        "busco_options": {
+            "title": "BUSCO options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "busco_mode": {
+                    "type": "string",
+                    "default": "transcriptome",
+                    "description": "The mode to run BUSCO in. One of genome, proteins, or transcriptome",
+                    "enum": ["genome", "proteins", "transcriptome"]
+                },
+                "busco_lineage": {
+                    "type": "string",
+                    "default": "auto",
+                    "description": "The BUSCO lineage to use, or `auto` to automatically select lineage"
+                },
+                "busco_lineages_path": {
+                    "type": "string",
+                    "description": "Path to local BUSCO lineages directory."
+                },
+                "busco_config": {
+                    "type": "string",
+                    "description": "Path to BUSCO config file."
+                }
+            },
+            "fa_icon": "fas fa-chart-pie"
+        },
+        "rnaquast_options": {
+            "title": "rnaQUAST options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "fa_icon": "fas fa-ruler",
+            "properties": {
                 "fasta": {
                     "type": "string",
                     "format": "file-path",
@@ -62,25 +198,42 @@
                     "mimetype": "text/plain",
                     "pattern": "^\\S+\\.fn?a(sta)?(\\.gz)?$",
                     "description": "Path to FASTA genome file.",
-                    "help_text": "This parameter is *mandatory* if `--genome` is not specified. If you don't have a BWA index available this will be generated for you automatically. Combine with `--save_reference` to save BWA index for future runs.",
-                    "fa_icon": "far fa-file-code"
+                    "help_text": "This parameter can be used to provide a reference to rnaQUAST.",
+                    "fa_icon": "far fa-file-code",
+                    "hidden": false
                 },
-                "igenomes_ignore": {
-                    "type": "boolean",
-                    "description": "Do not load the iGenomes reference config.",
-                    "fa_icon": "fas fa-ban",
-                    "hidden": true,
-                    "help_text": "Do not load `igenomes.config` when running the pipeline. You may choose this option if you observe clashes between custom parameters and those supplied in `igenomes.config`."
-                },
-                "igenomes_base": {
+                "gtf": {
                     "type": "string",
-                    "format": "directory-path",
-                    "description": "The base path to the igenomes reference files",
-                    "fa_icon": "fas fa-ban",
-                    "hidden": true,
-                    "default": "s3://ngi-igenomes/igenomes/"
+                    "description": "File with gene coordinates in GTF/GFF format (needs information about parent relations). rnaQUAST authors recommend to use files downloaded from GENCODE or Ensembl."
                 }
             }
+        },
+        "transrate_options": {
+            "title": "TransRate options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "transrate_reference": {
+                    "type": "string",
+                    "description": "Path to FASTA file of reference set of proteins or transcripts from a related species"
+                }
+            },
+            "fa_icon": "fas fa-align-center"
+        },
+        "salmon_options": {
+            "title": "Salmon options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "lib_type": {
+                    "type": "string",
+                    "default": "A",
+                    "description": "Override library type inferred based on strandedness defined in meta object. `A` for auto."
+                }
+            },
+            "fa_icon": "fas fa-fish"
         },
         "institutional_config_options": {
             "title": "Institutional config options",
@@ -226,20 +379,73 @@
                     "hidden": true
                 }
             }
+        },
+        "reference_genome_options": {
+            "title": "Reference genome options",
+            "type": "object",
+            "fa_icon": "fas fa-dna",
+            "description": "Reference genome related files and options required for the workflow.",
+            "properties": {
+                "genome": {
+                    "type": "string",
+                    "description": "Name of iGenomes reference.",
+                    "fa_icon": "fas fa-book",
+                    "help_text": "If using a reference genome configured in the pipeline using iGenomes, use this parameter to give the ID for the reference. This is then used to build the full paths for all required reference genome files e.g. `--genome GRCh38`. \n\nSee the [nf-core website docs](https://nf-co.re/usage/reference_genomes) for more details.",
+                    "hidden": true
+                },
+                "igenomes_base": {
+                    "type": "string",
+                    "default": "s3://ngi-igenomes/igenomes/",
+                    "fa_icon": "fas fa-cloud-download-alt",
+                    "description": "Directory / URL base for iGenomes references.",
+                    "hidden": true
+                },
+                "igenomes_ignore": {
+                    "type": "boolean",
+                    "description": "Do not load the iGenomes reference config.",
+                    "fa_icon": "fas fa-ban",
+                    "hidden": true,
+                    "help_text": "Do not load `igenomes.config` when running the pipeline. You may choose this option if you observe clashes between custom parameters and those supplied in `igenomes.config`."
+                }
+            }
         }
     },
     "allOf": [
         {
+            "$ref": "#/$defs/workflow_options"
+        },
+        {
             "$ref": "#/$defs/input_output_options"
         },
         {
-            "$ref": "#/$defs/reference_genome_options"
+            "$ref": "#/$defs/fastqc_fastp_options"
+        },
+        {
+            "$ref": "#/$defs/sortmerna_options"
+        },
+        {
+            "$ref": "#/$defs/assembly_options"
+        },
+        {
+            "$ref": "#/$defs/busco_options"
+        },
+        {
+            "$ref": "#/$defs/rnaquast_options"
+        },
+        {
+            "$ref": "#/$defs/transrate_options"
+        },
+        {
+            "$ref": "#/$defs/salmon_options"
         },
         {
             "$ref": "#/$defs/institutional_config_options"
         },
         {
             "$ref": "#/$defs/generic_options"
+        },
+        {
+            "$ref": "#/$defs/reference_genome_options"
         }
     ]
 }
