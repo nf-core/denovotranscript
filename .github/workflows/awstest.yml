@@ -22,6 +22,7 @@ jobs:
           parameters: |
             {
               "outdir": "s3://${{ secrets.AWS_S3_BUCKET }}/denovotranscript/results-test-${{ github.sha }}"
+              "resume": "a77b287d-3e7d-464e-95e8-9a6b23d9537c"
             }
           profiles: test
 
