@@ -24,6 +24,7 @@ jobs:
               "outdir": "s3://${{ secrets.AWS_S3_BUCKET }}/denovotranscript/results-test-${{ github.sha }}",
             }
           profiles: test
+          resume: 9efbe7f0-d32c-45a9-b4a5-05c474a2643d
 
       - uses: actions/upload-artifact@v4
         with:
