@@ -202,19 +202,15 @@ workflow DENOVOTRANSCRIPT {
             ch_versions = ch_versions.mix(EVIGENE_TR2AACDS.out.versions)
 
             ch_transcripts = EVIGENE_TR2AACDS.out.okayset.map { meta, dir ->
-                def mrna_file = file("${dir}/all_assembled.okay.mrna", checkIfExists: true, type: 'file')
-                return [ meta, mrna_file ]}
-            ch_transcripts.view()
-            ch_transcripts.ifEmpty {
-                error "ch_transcripts is empty!"
+                def mrna_file = dir.listFiles().find { it.name.endsWith('.okay.mrna') }
+                if (!mrna_file) throw new Exception("No .okay.mrna file found in ${dir}")
+                return [ meta, mrna_file ]
             }
 
             ch_pubids = EVIGENE_TR2AACDS.out.okayset.map { meta, dir ->
-                def pubids_file = file("${dir}/all_assembled.pubids", checkIfExists: true, type: 'file')
-                return [ meta, pubids_file ]}
-            ch_pubids.view()
-            ch_pubids.ifEmpty {
-                error "ch_pubids is empty!"
+                def pubids_file = dir.listFiles().find { it.name.endsWith('.pubids') }
+                if (!pubids_file) throw new Exception("No .pubids file found in ${dir}")
+                return [ meta, pubids_file ]
             }
             //
             // MODULE: TX2GENE
