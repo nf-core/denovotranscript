@@ -21,7 +21,7 @@ jobs:
           workdir: s3://${{ secrets.AWS_S3_BUCKET }}/work/denovotranscript/work-${{ github.sha }}
           parameters: |
             {
-              "outdir": "s3://${{ secrets.AWS_S3_BUCKET }}/denovotranscript/results-test-${{ github.sha }}",
+              "outdir": "s3://${{ secrets.AWS_S3_BUCKET }}/denovotranscript/results-test-${{ github.sha }}"
             }
           profiles: test
 
