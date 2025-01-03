@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [PR #27](https://github.com/nf-core/denovotranscript/pull/27) - Update spades resources and usage instructions
 - [PR #28](https://github.com/nf-core/denovotranscript/pull/28) - Template update for nf-core/tools v3.1.0
 - [PR #29](https://github.com/nf-core/denovotranscript/pull/29) - Template update for nf-core/tools v3.1.1
+- [PR #30](https://github.com/nf-core/denovotranscript/pull/30) - Fix ch_transcripts and ch_pubids for AWS
 
 ## v1.1.0 - [2024-11-28]
 
