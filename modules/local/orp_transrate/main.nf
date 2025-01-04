@@ -29,8 +29,7 @@ process ORP_TRANSRATE {
     }
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
-    def reference = params.transrate_reference ? "--reference ${params.transrate_reference}" : ""
-
+    def transrate_reference = reference ? "--reference $reference" : ''
     """
     source /home/orp/Oyster_River_Protocol/software/anaconda/install/bin/activate orp
     gunzip -c ${reads[0]} > ${prefix}_1.fq
@@ -47,7 +46,7 @@ process ORP_TRANSRATE {
         --left ${prefix}_1.fq \\
         --right ${prefix}_2.fq \\
         --threads $task.cpus \\
-        $reference \\
+        $transrate_reference \\
         $args
 
     cp .command.out transrate.log
