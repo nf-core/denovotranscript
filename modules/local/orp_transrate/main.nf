@@ -3,10 +3,9 @@ process ORP_TRANSRATE {
     label 'process_high'
 
     // Using conda or the biocontainer for transrate results in a SNAP index error.
-    // However, the error does not occur when using transrate from the Oyster River Protocol.
+    // However, the error does not occur when using the tarball from the Oyster River Protocol.
     // see https://github.com/blahah/transrate/issues/248
-    container 'docker.io/macmaneslab/orp:2.3.3'
-    containerOptions = '--no-mount /home'
+    container 'docker.io/avanibhojwani/orp_transrate:1.0.3_cv1.3'
 
     input:
     tuple val(meta), path(fasta)         // assembly file
@@ -31,7 +30,6 @@ process ORP_TRANSRATE {
     def prefix = task.ext.prefix ?: "${meta.id}"
     def transrate_reference = reference ? "--reference $reference" : ''
     """
-    source /home/orp/Oyster_River_Protocol/software/anaconda/install/bin/activate orp
     gunzip -c ${reads[0]} > ${prefix}_1.fq
     gunzip -c ${reads[1]} > ${prefix}_2.fq
 
@@ -54,7 +52,8 @@ process ORP_TRANSRATE {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        transrate: \$(transrate -v)
+        transrate (from Oyster River Protocol): \$(transrate -v)
+        blast+: \$(blastp -version | grep -oP "blast \\K[^,]*")
     END_VERSIONS
     """
 }
