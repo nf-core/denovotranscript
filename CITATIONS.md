@@ -52,6 +52,10 @@
 
   > Smith-Unna R, Boursnell C, Patro R, Hibberd JM, Kelly S. TransRate: reference-free quality assessment of de novo transcriptome assemblies. Genome Res. 2016 Aug;26(8):1134-44. doi: 10.1101/gr.196469.115. Epub 2016 Jun 1. PMID: 27252236; PMCID: PMC4971766.
 
+  This pipeline uses TransRate from the [Oyster River Protocol](https://github.com/macmanes-lab/Oyster_River_Protocol/tree/master/software).
+
+  > MacManes MD. The Oyster River Protocol: a multi-assembler and kmer approach for de novo transcriptome assembly. PeerJ. 2018 Aug 3;6:e5428. doi: 10.7717/peerj.5428. PMID: 30083482; PMCID: PMC6078068.
+
 - [Trinity](https://github.com/trinityrnaseq/trinityrnaseq/wiki)
 
   > Haas BJ, Papanicolaou A, Yassour M, Grabherr M, Blood PD, Bowden J, Couger MB, Eccles D, Li B, Lieber M, MacManes MD, Ott M, Orvis J, Pochet N, Strozzi F, Weeks N, Westerman R, William T, Dewey CN, Henschel R, LeDuc RD, Friedman N, Regev A. De novo transcript sequence reconstruction from RNA-seq using the Trinity platform for reference generation and analysis. Nat Protoc. 2013 Aug;8(8):1494-512. doi: 10.1038/nprot.2013.084. Epub 2013 Jul 11. PMID: 23845962; PMCID: PMC3875132.
