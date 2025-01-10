@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [PR #28](https://github.com/nf-core/denovotranscript/pull/28) - Template update for nf-core/tools v3.1.0
 - [PR #29](https://github.com/nf-core/denovotranscript/pull/29) - Template update for nf-core/tools v3.1.1
 - [PR #30](https://github.com/nf-core/denovotranscript/pull/30) - Fix ch_transcripts and ch_pubids for AWS
+- [PR #32](https://github.com/nf-core/denovotranscript/pull/32) - Fix transrate dependencies issue
 
 ## v1.1.0 - [2024-11-28]
 
