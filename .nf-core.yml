@@ -2,7 +2,7 @@ lint:
   nextflow_config:
     - config_defaults:
         - params.ribo_database_manifest
-nf_core_version: 3.1.1
+nf_core_version: 3.2.0
 repository_type: pipeline
 template:
   author: Avani Bhojwani and Timothy Little
