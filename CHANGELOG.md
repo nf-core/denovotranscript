@@ -3,6 +3,17 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v1.2.0 - [2025-01-30]
+
+- [PR #25](https://github.com/nf-core/denovotranscript/pull/25) - Bump version to 1.2.0dev
+- [PR #27](https://github.com/nf-core/denovotranscript/pull/27) - Update spades resources and usage instructions
+- [PR #28](https://github.com/nf-core/denovotranscript/pull/28) - Template update for nf-core/tools v3.1.0
+- [PR #29](https://github.com/nf-core/denovotranscript/pull/29) - Template update for nf-core/tools v3.1.1
+- [PR #30](https://github.com/nf-core/denovotranscript/pull/30) - Fix ch_transcripts and ch_pubids for AWS
+- [PR #32](https://github.com/nf-core/denovotranscript/pull/32) - Fix transrate dependencies issue
+- [PR #33](https://github.com/nf-core/denovotranscript/pull/33) - Bump version to 1.2.0
+- [PR #36](https://github.com/nf-core/denovotranscript/pull/36) - Template update for nf-core/tools v3.2.0
+
 ## v1.1.0 - [2024-11-28]
 
 Enhancements & fixes:
@@ -11,7 +22,7 @@ Enhancements & fixes:
 - [PR #15](https://github.com/nf-core/denovotranscript/pull/15) - Fix logic for skip_assembly parameter
 - [PR #16](https://github.com/nf-core/denovotranscript/pull/16) - Increase resources for Trinity
 - [PR #19](https://github.com/nf-core/denovotranscript/pull/21) - Fix Salmon quantification when running in skip_assembly mode
-- [PR #24](https://github.com/nf-core/denovotranscript/pull/21) - Update Trinity module and fix dependency issue
+- [PR #24](https://github.com/nf-core/denovotranscript/pull/24) - Update Trinity module and fix dependency issue
 
 ### Software dependencies
 

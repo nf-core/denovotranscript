@@ -202,12 +202,16 @@ workflow DENOVOTRANSCRIPT {
             ch_versions = ch_versions.mix(EVIGENE_TR2AACDS.out.versions)
 
             ch_transcripts = EVIGENE_TR2AACDS.out.okayset.map { meta, dir ->
-                def mrna_file = file("$dir/*okay.mrna")
-                return [ meta, mrna_file ]}
+                def mrna_file = dir.listFiles().find { it.name.endsWith('.okay.mrna') }
+                if (!mrna_file) throw new Exception("No .okay.mrna file found in ${dir}")
+                return [ meta, mrna_file ]
+            }
 
             ch_pubids = EVIGENE_TR2AACDS.out.okayset.map { meta, dir ->
-                def pubids_file = file("$dir/*.pubids")
-                return [ meta, pubids_file ]}
+                def pubids_file = dir.listFiles().find { it.name.endsWith('.pubids') }
+                if (!pubids_file) throw new Exception("No .pubids file found in ${dir}")
+                return [ meta, pubids_file ]
+            }
             //
             // MODULE: TX2GENE
             //
@@ -286,7 +290,7 @@ workflow DENOVOTRANSCRIPT {
     softwareVersionsToYAML(ch_versions)
         .collectFile(
             storeDir: "${params.outdir}/pipeline_info",
-            name: 'nf_core_'  + 'pipeline_software_' +  'mqc_'  + 'versions.yml',
+            name: 'nf_core_'  +  'denovotranscript_software_'  + 'mqc_'  + 'versions.yml',
             sort: true,
             newLine: true
         ).set { ch_collated_versions }

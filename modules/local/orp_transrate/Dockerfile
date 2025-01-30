@@ -1,4 +1,3 @@
-# Base image
 FROM ubuntu:20.04
 
 # Using conda or the biocontainer for transrate results in a SNAP index error.
@@ -13,11 +12,18 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y \
     wget \
     tar \
+    build-essential \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /opt
+
+# Install BLAST+
+RUN wget https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.2.31/ncbi-blast-2.2.31+-x64-linux.tar.gz && \
+    tar zxvf ncbi-blast-2.2.31+-x64-linux.tar.gz && \
+    cp ncbi-blast-2.2.31+/bin/* /usr/local/bin/ && \
+    rm -rf ncbi-blast-2.2.31+ ncbi-blast-2.2.31+-x64-linux.tar.gz
 
 # Download the tarball
 RUN wget https://github.com/macmanes-lab/Oyster_River_Protocol/raw/master/software/orp-transrate.tar.gz -O orp-transrate.tar.gz
