@@ -44,6 +44,9 @@
                     "@id": "modules/"
                 },
                 {
+                    "@id": "modules/local/"
+                },
+                {
                     "@id": "modules/nf-core/"
                 },
                 {
@@ -121,13 +124,27 @@
         },
         {
             "@id": "main.nf",
-            "@type": ["File", "SoftwareSourceCode", "ComputationalWorkflow"],
+            "@type": [
+                "File",
+                "SoftwareSourceCode",
+                "ComputationalWorkflow"
+            ],
             "dateCreated": "",
             "dateModified": "2025-04-30T12:25:59Z",
             "dct:conformsTo": "https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE/",
-            "keywords": ["nf-core", "nextflow", "denovo-assembly", "rna-seq", "transcriptome"],
-            "license": ["MIT"],
-            "name": ["nf-core/denovotranscript"],
+            "keywords": [
+                "nf-core",
+                "nextflow",
+                "denovo-assembly",
+                "rna-seq",
+                "transcriptome"
+            ],
+            "license": [
+                "MIT"
+            ],
+            "name": [
+                "nf-core/denovotranscript"
+            ],
             "programmingLanguage": {
                 "@id": "https://w3id.org/workflowhub/workflow-ro-crate#nextflow"
             },
@@ -204,6 +221,11 @@
             "@id": "modules/",
             "@type": "Dataset",
             "description": "Modules used by the pipeline"
+        },
+        {
+            "@id": "modules/local/",
+            "@type": "Dataset",
+            "description": "Pipeline-specific modules"
         },
         {
             "@id": "modules/nf-core/",

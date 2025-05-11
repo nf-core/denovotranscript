@@ -1,0 +1,34 @@
+Changes in module 'nf-core/salmon/quant'
+--- modules/nf-core/salmon/quant/main.nf
++++ modules/nf-core/salmon/quant/main.nf
+@@ -10,9 +10,7 @@
+     input:
+     tuple val(meta), path(reads)
+     path  index
+-    path  gtf
+     path  transcript_fasta
+-    val   alignment_mode
+     val   lib_type
+ 
+     output:
+@@ -32,10 +30,6 @@
+     def reads1 = [], reads2 = []
+     meta.single_end ? [reads].flatten().each{reads1 << it} : reads.eachWithIndex{ v, ix -> ( ix & 1 ? reads2 : reads1) << v }
+     def input_reads = meta.single_end ? "-r ${reads1.join(" ")}" : "-1 ${reads1.join(" ")} -2 ${reads2.join(" ")}"
+-    if (alignment_mode) {
+-        reference   = "-t $transcript_fasta"
+-        input_reads = "-a $reads"
+-    }
+ 
+     def strandedness_opts = [
+         'A', 'U', 'SF', 'SR',
+@@ -60,7 +54,6 @@
+     }
+     """
+     salmon quant \\
+-        --geneMap $gtf \\
+         --threads $task.cpus \\
+         --libType=$strandedness \\
+         $reference \\
+
+************************************************************
