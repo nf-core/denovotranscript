@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## v1.3.0dev - [date]
 
+### `Fixed`
+
+- [PR #44](https://github.com/nf-core/denovotranscript/pull/44) - Resolved linting warnings. Completed `toolCitationText` and `toolBibliographyText` for reporting (by @vagkaratzas)
+
 ### `Changed`
 
 - [PR #43](https://github.com/nf-core/denovotranscript/pull/43) - Default branch changed from `master` to `main` (by @vagkaratzas)
