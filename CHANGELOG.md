@@ -5,6 +5,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## v1.3.0dev - [date]
 
+### `Changed`
+
+- [PR #43](https://github.com/nf-core/denovotranscript/pull/43) - Default branch changed from `master` to `main` (by @vagkaratzas)
 - [PR #37](https://github.com/nf-core/denovotranscript/pull/37) - Bump version to 1.3.0dev
 
 ## v1.2.0 - [2025-01-30]

@@ -1,4 +1,6 @@
 lint:
+  files_unchanged:
+    - .github/PULL_REQUEST_TEMPLATE.md
   nextflow_config:
     - config_defaults:
         - params.ribo_database_manifest
