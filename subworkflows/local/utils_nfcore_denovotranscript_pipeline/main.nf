@@ -230,26 +230,87 @@ def genomeExistsError() {
 // Generate methods description for MultiQC
 //
 def toolCitationText() {
-    // TODO nf-core: Optionally add in-text citation tools to this list.
     // Can use ternary operators to dynamically construct based conditions, e.g. params["run_xyz"] ? "Tool (Foo et al. 2023)" : "",
     // Uncomment function in methodsDescriptionText to render in MultiQC report
+
+    def seq_qc_text = "Sequencing quality control was carried out with FastQC (Andrews 2010)."
+
+    def shortread_qc_text = "Short read preprocessing was performed with fastp (Chen et al. 2018)."
+
+    def ribosomal_filtering_text = "Ribosomal RNAs were removed with SortMeRNA (Kopylova et al. 2012)."
+
+    def assemblers = params.assemblers.tokenize(',')
+    def assembly_text = [
+        "De novo assembly was performed with the following tool(s); ",
+        (assemblers.contains('trinity') || assemblers.contains('trinity_no_norm')) ? "Trinity (Haas et al. 2013)." : "",
+        assemblers.contains('rnaspades') ? "rnaSPAdes (Prjibelski et al. 2020)." : "",
+    ].join(' ').trim()
+
+    def assembly_reduction_text = "Assembly redundancy reduction was performed with Evidential Gene (Gilbert et al. 2019)."
+
+    def quality_assessment_text = [
+        "Assembly quality assessment was carried with the following tool(s); ",
+        "BUSCO (Manni et al. 2021).",
+        "rnaQUAST (Bushmanova et al. 2016).",
+        workflow.profile.tokenize(',').intersect(['conda', 'mamba']).size() == 0 ? "TransRate (Smith-Unna et al. 2016)." : "",
+    ].join(' ').trim()
+
+    def quantification_text = "Quantification of transcript expression was performed with Salmon (Patro et al. 2017)."
+
+    def postprocessing_text = "Run statistics were reported using MultiQC (Ewels et al. 2016)."
+
     def citation_text = [
             "Tools used in the workflow included:",
-            "FastQC (Andrews 2010),",
-            "MultiQC (Ewels et al. 2016)",
-            "."
+            !params.skip_fastqc ? seq_qc_text : "",
+            !params.skip_fastp ? shortread_qc_text : "",
+            params.remove_ribo_rna ? ribosomal_filtering_text : "",
+            (!params.qc_only && !params.skip_assembly) ? assembly_text : "",
+            (!params.qc_only && !params.skip_assembly) ? assembly_reduction_text : "",
+            (!params.qc_only && !params.skip_assembly) ? quality_assessment_text : "",
+            (!params.qc_only && !params.skip_assembly) ? quantification_text : "",
+            postprocessing_text
         ].join(' ').trim()
 
     return citation_text
 }
 
 def toolBibliographyText() {
-    // TODO nf-core: Optionally add bibliographic entries to this list.
     // Can use ternary operators to dynamically construct based conditions, e.g. params["run_xyz"] ? "<li>Author (2023) Pub name, Journal, DOI</li>" : "",
     // Uncomment function in methodsDescriptionText to render in MultiQC report
+
+    def seq_qc_text = '<li>Andrews S. (2010) FastQC: A Quality Control Tool for High Throughput Sequence Data, URL: <a href=\"https://www.bioinformatics.babraham.ac.uk/projects/fastqc/\">https://www.bioinformatics.babraham.ac.uk/projects/fastqc/</a></li>'
+
+    def shortread_qc_text = '<li>Chen, S. (2023). Ultrafast one‐pass FASTQ data preprocessing, quality control, and deduplication using fastp. Imeta, 2(2), e107. doi: <a href="https://doi.org/10.1002/imt2.107">10.1002/imt2.107</a></li>'
+
+    def ribosomal_filtering_text = '<li>Kopylova, E., Noé, L., & Touzet, H. (2012). SortMeRNA: fast and accurate filtering of ribosomal RNAs in metatranscriptomic data. Bioinformatics, 28(24), 3211-3217. doi: <a href="https://doi.org/10.1093/bioinformatics/bts611">10.1093/bioinformatics/bts611</a></li>'
+
+    def assemblers = params.assemblers.tokenize(',')
+    def assembly_text = [
+        (assemblers.contains('trinity') || assemblers.contains('trinity_no_norm')) ? '<li>Haas, B. J., Papanicolaou, A., Yassour, M., Grabherr, M., Blood, P. D., Bowden, J., ... & Regev, A. (2013). De novo transcript sequence reconstruction from RNA-seq using the Trinity platform for reference generation and analysis. Nature protocols, 8(8), 1494-1512. doi: <a href="https://doi.org/10.1038/nprot.2013.084">10.1038/nprot.2013.084</a></li>' : "",
+        assemblers.contains('rnaspades') ? '<li>Prjibelski, A., Antipov, D., Meleshko, D., Lapidus, A., & Korobeynikov, A. (2020). Using SPAdes de novo assembler. Current protocols in bioinformatics, 70(1), e102. doi: <a href="https://doi.org/10.1002/cpbi.102">10.1002/cpbi.102</a></li>' : "",
+    ].join(' ').trim()
+
+    def assembly_reduction_text = '<li>Gilbert, D. G. (2019). Longest protein, longest transcript or most expression, for accurate gene reconstruction of transcriptomes?. BioRxiv, 829184. doi: <a href="https://doi.org/10.1101/829184">10.1101/829184</a></li>'
+
+    def quality_assessment_text = [
+        '<li>Manni, M., Berkeley, M. R., Seppey, M., Simão, F. A., & Zdobnov, E. M. (2021). BUSCO update: novel and streamlined workflows along with broader and deeper phylogenetic coverage for scoring of eukaryotic, prokaryotic, and viral genomes. Molecular biology and evolution, 38(10), 4647-4654. doi: <a href="https://doi.org/10.1093/molbev/msab199">10.1093/molbev/msab199</a></li>',
+        '<li>Bushmanova, E., Antipov, D., Lapidus, A., Suvorov, V., & Prjibelski, A. D. (2016). rnaQUAST: a quality assessment tool for de novo transcriptome assemblies. Bioinformatics, 32(14), 2210-2212. doi: <a href="https://doi.org/10.1093/bioinformatics/btw218">10.1093/bioinformatics/btw218</a></li>',
+        workflow.profile.tokenize(',').intersect(['conda', 'mamba']).size() == 0 ? '<li>Smith-Unna, R., Boursnell, C., Patro, R., Hibberd, J. M., & Kelly, S. (2016). TransRate: reference-free quality assessment of de novo transcriptome assemblies. Genome research, 26(8), 1134-1144. doi: <a href="https://doi.org/10.1101/gr.196469.115">10.1101/gr.196469.115</a></li>' : "",
+    ].join(' ').trim()
+
+    def quantification_text = '<li>Patro, R., Duggal, G., Love, M. I., Irizarry, R. A., & Kingsford, C. (2017). Salmon provides fast and bias-aware quantification of transcript expression. Nature methods, 14(4), 417-419. doi: <a href="https://doi.org/10.1038/nmeth.4197">10.1038/nmeth.4197</a></li>'
+
+    def postprocessing_text = '<li>Ewels, P., Magnusson, M., Lundin, S., & Käller, M. (2016). MultiQC: summarize analysis results for multiple tools and samples in a single report. Bioinformatics, 32(19), 3047–3048. doi: <a href="https://doi.org/10.1093/bioinformatics/btw354">10.1093/bioinformatics/btw354</a></li>'
+
     def reference_text = [
-            "<li>Andrews S, (2010) FastQC, URL: https://www.bioinformatics.babraham.ac.uk/projects/fastqc/).</li>",
-            "<li>Ewels, P., Magnusson, M., Lundin, S., & Käller, M. (2016). MultiQC: summarize analysis results for multiple tools and samples in a single report. Bioinformatics , 32(19), 3047–3048. doi: /10.1093/bioinformatics/btw354</li>"
+            !params.skip_fastqc ? seq_qc_text : "",
+            !params.skip_fastp ? shortread_qc_text : "",
+            params.remove_ribo_rna ? ribosomal_filtering_text : "",
+            (!params.qc_only && !params.skip_assembly) ? assembly_text : "",
+            (!params.qc_only && !params.skip_assembly) ? assembly_reduction_text : "",
+            (!params.qc_only && !params.skip_assembly) ? quality_assessment_text : "",
+            (!params.qc_only && !params.skip_assembly) ? quantification_text : "",
+            postprocessing_text
         ].join(' ').trim()
 
     return reference_text
@@ -275,13 +336,8 @@ def methodsDescriptionText(mqc_methods_yaml) {
     } else meta["doi_text"] = ""
     meta["nodoi_text"] = meta.manifest_map.doi ? "" : "<li>If available, make sure to update the text to include the Zenodo DOI of version of the pipeline used. </li>"
 
-    // Tool references
-    meta["tool_citations"] = ""
-    meta["tool_bibliography"] = ""
-
-    // TODO nf-core: Only uncomment below if logic in toolCitationText/toolBibliographyText has been filled!
-    // meta["tool_citations"] = toolCitationText().replaceAll(", \\.", ".").replaceAll("\\. \\.", ".").replaceAll(", \\.", ".")
-    // meta["tool_bibliography"] = toolBibliographyText()
+    meta["tool_citations"] = toolCitationText().replaceAll(", \\.", ".").replaceAll("\\. \\.", ".").replaceAll(", \\.", ".")
+    meta["tool_bibliography"] = toolBibliographyText()
 
 
     def methods_text = mqc_methods_yaml.text
