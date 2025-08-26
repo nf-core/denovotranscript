@@ -27,7 +27,6 @@
 3. Read QC of trimmed reads ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))
 4. Remove rRNA or mitochondrial DNA (optional) ([`SortMeRNA`](https://hpc.nih.gov/apps/sortmeRNA.html))
 5. Transcriptome assembly using any combination of the following:
-
    - [`Trinity`](https://github.com/trinityrnaseq/trinityrnaseq/wiki) with normalised reads (default=True)
    - [`Trinity`](https://github.com/trinityrnaseq/trinityrnaseq/wiki) with non-normalised reads
    - [`rnaSPAdes`](https://ablab.github.io/spades/rna.html) medium filtered transcripts outputted (default=True)

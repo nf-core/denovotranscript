@@ -1,7 +1,7 @@
 lint:
   nextflow_config:
-  - config_defaults:
-    - params.ribo_database_manifest
+    - config_defaults:
+        - params.ribo_database_manifest
 nf_core_version: 3.2.0
 repository_type: pipeline
 template:
