@@ -6,11 +6,11 @@ nf_core_version: 3.2.0
 repository_type: pipeline
 template:
   author: Avani Bhojwani and Timothy Little
-  description: A pipeline for de novo transcriptome assembly of short reads from bulk
-    RNA-seq
+  description: A pipeline for de novo transcriptome assembly of short reads from
+    bulk RNA-seq
   force: false
   is_nfcore: true
   name: denovotranscript
   org: nf-core
   outdir: .
-  version: 1.2.0
+  version: 1.2.1
